@@ -30,15 +30,15 @@ export default function RootLayout({
     <head><Script src="http://localhost:3000"></Script></head>
       <body className={`bg-white ${inter.className}`}>
         <div className="flex">
-          <SideNav/>
+          {/* <SideNav/> */}
           <main className="flex-1">
-            <MarginWidthWrapper>
-          <HeaderWeb/>
-        <HeaderMobile/>
-        <PageWrapper>
-        {children}
-        </PageWrapper>
-        </MarginWidthWrapper>
+            {/* <MarginWidthWrapper> */}
+            <HeaderWeb/>
+            {/* <HeaderMobile/> */}
+            <PageWrapper>
+            {children}
+            </PageWrapper>
+            {/* </MarginWidthWrapper> */}
           </main>
         </div>
       </body>

@@ -9,6 +9,7 @@ import { SIDENAV_ITEMS } from '@/constants';
 import { SideNavItem } from '@/types';
 import { Icon } from '@iconify/react';
 import { motion, useCycle } from 'framer-motion';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 type MenuItemWithSubMenuProps = {
   item: SideNavItem;
@@ -45,7 +46,7 @@ const HeaderMobile = () => {
       initial={false}
       animate={isOpen ? 'open' : 'closed'}
       custom={height}
-      className={`fixed inset-0 z-50 w-full md:hidden ${
+      className={`fixed inset-0 z-50 w-full ${
         isOpen ? '' : 'pointer-events-none'
       }`}
       ref={containerRef}
@@ -87,6 +88,7 @@ const HeaderMobile = () => {
         })}
       </motion.ul>
       <MenuToggle toggle={toggleOpen} />
+
     </motion.nav>
   );
 };
@@ -96,7 +98,7 @@ export default HeaderMobile;
 const MenuToggle = ({ toggle }: { toggle: any }) => (
   <button
     onClick={toggle}
-    className="pointer-events-auto absolute right-4 top-[14px] z-30"
+    className="pointer-events-auto absolute right-5 top-[14px] z-30"
   >
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path

@@ -1,10 +1,21 @@
 "use client"
-import { CompanyInfo } from "@/app/onboarding/page";
+
 import { Button } from "@/components/ui/button";
 // Form to create a new organization. The current user
 // will be given the Creator role.
 import { currentUser, useOrganizationList, useUser } from "@clerk/nextjs";
 import { FormEventHandler, MouseEventHandler, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { CompanyInfo } from "@/types";
+import { redirect } from "next/navigation";
+
  
 export default function CreateOrganization() {
   const { createOrganization } = useOrganizationList();
@@ -41,19 +52,34 @@ export default function CreateOrganization() {
       return createdCompanyInfo;
 };
     fetchData();
+    redirect("/onboarding");
   }
   
   return (
     // IF ORGANIZATION HAS BEEN MADE PREVENT FORM FROM BEING SUBMITTED
    <>
-      <input
+   <Card className="w-70">
+  <CardHeader>
+    <CardTitle>Create Organization</CardTitle>
+    <CardDescription>Type in your company name</CardDescription>
+  </CardHeader>
+  <CardContent>
+  <input
         type="text"
         name="organizationName"
+        className="w-full p-2 border border-gray-300 rounded-md"
         value={organizationName}
         onChange={(e) => setOrganizationName(e.currentTarget.value)}
         
       />
-      <Button onClick={(e)=>handleSubmit(e)}>Create organization</Button>
+      
+  </CardContent>
+  <CardFooter>
+  <Button onClick={(e)=>handleSubmit(e)}>Create organization</Button>
+  </CardFooter>
+</Card>
+
+   
       </>
   );
 }
