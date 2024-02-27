@@ -1,9 +1,8 @@
-
-import CompanyOnboarding from "@/lib/CompanyOnboarding";
 import TokenRefresh from "@/lib/TokenRefresh"
 import { NextRequest } from "next/server"
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import AddContractor from "@/lib/AddContractor";
 
 
 export async function POST(req: NextRequest) {
@@ -27,7 +26,7 @@ export async function POST(req: NextRequest) {
       const newCompanyInfo = {...companyInfo, access_token:access_token, refresh_token:refresh_token}
       const response = {newCompanyInfo: newCompanyInfo}
       await setDoc(docRef, {companies: [{gustoData: newCompanyInfo}]}, {merge: true});
-      const url = await CompanyOnboarding(newCompanyInfo)
+      const url = await AddContractor(newCompanyInfo)
       if(url){
       console.log('url:', url)
       const finalResponse = {...response, urlObject: url}

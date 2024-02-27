@@ -1,9 +1,8 @@
 
 import { CompanyInfo, Data } from "@/types";
-import { ApproveDemoCompany } from "./CreateCompany";
 
 // This function is responsible for handling the onboarding process for a company.
-export default async function CompanyOnboarding(Info: CompanyInfo | null): Promise<Data | null> {
+export default async function PayContractors(Info: CompanyInfo | null): Promise<Data | null> {
   // Get company info from local storage
 
   let company_uuid: string;
@@ -31,7 +30,7 @@ export default async function CompanyOnboarding(Info: CompanyInfo | null): Promi
       'X-Gusto-API-Version': '2023-12-01'
     },
     body: JSON.stringify({
-      flow_type: 'company_onboarding'
+      flow_type: 'contractor_payments'
     })
   };
 
@@ -46,7 +45,7 @@ export default async function CompanyOnboarding(Info: CompanyInfo | null): Promi
       return res.json();
       }
       else {
-        console.log("Error in company onboarding")
+        console.log("Error in getting contractor payments flow")
         console.log("res:", res)
         return null
       }

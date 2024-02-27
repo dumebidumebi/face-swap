@@ -1,4 +1,6 @@
-import { CompanyInfo, UserInfo } from "@/app/onboarding/page";
+
+import { CompanyInfo, UserInfo } from "@/types";
+import { currentUser } from "@clerk/nextjs";
 
 export async function ApproveDemoCompany(company_uuid:string) {
   const url = `https://api.gusto-demo.com/v1/companies/${company_uuid}/approve`;
@@ -26,6 +28,7 @@ export default async function CreateCompany( userInfo: UserInfo ): Promise<Compa
   // get the users info and their ogranization info (for name of company)
 // 
   console.log('userInfo:', userInfo);
+  // const user = await currentUser();
   const user = userInfo?.user
   const organization = userInfo?.organization
   
@@ -47,7 +50,7 @@ export default async function CreateCompany( userInfo: UserInfo ): Promise<Compa
       user: {
         first_name: `${user?.firstName}`,
         last_name: `${user?.lastName}`,
-        email: `${user?.primaryEmailAddress?.emailAddress}`
+        email: `${user?.emailAddresses[0].emailAddress}`
       },
       company: {
         name: `${organization?.name}`,

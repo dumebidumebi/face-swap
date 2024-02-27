@@ -25,13 +25,13 @@ export default function Home() {
         Wage Wire is the easiest way to run payroll.
       </p>
       <div className='flex space-x-12 mt-10'>
-      <SignUpButton redirectUrl="/create-organization">
-      <Button size={"lg"}>Sign in</Button>
+      <SignUpButton redirectUrl="/clerk/create-org">
+      <Button size={"lg"}>Get Started</Button>
       </SignUpButton>
       
-      <Link href="/onboarding">
+      {/* <Link href="/onboarding">
       <Button size={"lg"}>Get Started</Button>
-      </Link>
+      </Link> */}
       </div>
       </div>
   
