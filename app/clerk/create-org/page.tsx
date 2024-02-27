@@ -27,6 +27,8 @@ export default function CreateOrganization() {
     e.preventDefault();
     
     if(organizationName == "") return alert("Please enter a name for the organization")
+    if(!organizationName) return alert("Please enter a name for the organization")
+    if(!createOrganization) return alert("no createOrganization function found")
 
     const org = await createOrganization({ name: organizationName });
     setOrganizationName("");
@@ -40,7 +42,7 @@ export default function CreateOrganization() {
       }).then((res) => {
         console.log("res",res)
         if(res.status === 200){
-        const temp: CompanyInfo = res.json();
+        const temp: any = res.json();
         return temp;
         }
         else{

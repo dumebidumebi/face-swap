@@ -25,7 +25,7 @@ function PayrollSettings() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>

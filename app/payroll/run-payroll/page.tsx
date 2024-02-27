@@ -25,7 +25,7 @@ function RunPayroll() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>

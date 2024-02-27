@@ -25,7 +25,7 @@ function Contractors() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>

@@ -25,7 +25,7 @@ function EmployeesPage() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>

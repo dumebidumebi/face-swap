@@ -25,7 +25,7 @@ function PayrollHistory() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>

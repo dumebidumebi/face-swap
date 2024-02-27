@@ -25,7 +25,7 @@ function PayContractors() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>

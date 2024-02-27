@@ -28,7 +28,7 @@ export default function Page() {
       console.log(err)
     }}
     fech()
-  },[])
+  })
 
   return (
     <div>
