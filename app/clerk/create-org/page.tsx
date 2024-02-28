@@ -14,13 +14,14 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { CompanyInfo } from "@/types";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
  
 export default function CreateOrganization() {
   const { createOrganization } = useOrganizationList();
   const [organizationName, setOrganizationName] = useState<string>("");
   const {  user } = useUser()
+  const router = useRouter()
 
  
   const handleSubmit: MouseEventHandler = async (e) => {
@@ -53,8 +54,8 @@ export default function CreateOrganization() {
       console.log("Created company info:", createdCompanyInfo);
       return createdCompanyInfo;
 };
-    fetchData();
-    redirect("/onboarding");
+    const foo = await fetchData();
+    router.push("/onboarding");
   }
   
   return (

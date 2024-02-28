@@ -1,6 +1,4 @@
 "use client"
-
-import Link from 'next/Link'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { CreateOrganization, SignUpButton, SignOutButton } from '@clerk/nextjs'
 import Image from 'next/image'
@@ -48,11 +46,11 @@ export default function Home() {
         }}className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] smw-[72.1875rem]'></div>
       </div>
       <div>
-        <div className='mx-auto max-w-6xl px-6 lg:px-8'>
+        <div className='mx-auto max-w-4xl px-6 lg:px-8'>
           <div className='mt-16 flow-root sm:mt-24'>
-            <div className='-m-2 rounded-xl bg-gray-900//5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4'>
+            <div className='-m-2 rounded-xl bg-gray-900//5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-2 lg:rounded-2xl lg:p-2'>
               {/* image here */}
-              <Image src={payrollPic} width={1000} height={1000} alt='payroll page user interface' />
+              <Image src={payrollPic} width={900} height={1000} alt='payroll page user interface' />
             </div>
           </div>
         </div>
@@ -69,7 +67,7 @@ export default function Home() {
       <div className='mb-12 px-6 lg:px-8'>
         <div className='mx-auto max-w-2xl sm:text-center'>
         <h2 className='mt-20 font-bold text-4xl text-gray-900 sm:text-5xl'>Don&#39;t worry about taxes</h2>
-        <p className='mt-4 text-lg text-gray-600'> We&#39;ll take care of that too ;)</p>
+        <p className='mt-4 text-lg text-gray-600'> We&#39;ll take care of that too ;</p>
         </div>
       </div>
       {/* steps */}
@@ -96,11 +94,11 @@ export default function Home() {
           </div>
         </li>
       </ol>
-      <div className='mx-auto max-w-6xl px-6 lg:px-8'>
+      <div className='mx-auto max-w-4xl px-6 lg:px-8'>
           <div className='mt-16 flow-root sm:mt-24'>
-            <div className='-m-2 rounded-xl bg-gray-900//5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4'>
+            <div className='-m-2 rounded-xl bg-gray-900//5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-2 lg:rounded-2xl lg:p-2'>
             {/* image here */}
-            <Image src={employeesPic} width={1000} height={1000} alt='employees page user interface' />
+            <Image src={employeesPic} width={900} height={1000} alt='employees page user interface' />
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, RedirectToCreateOrganization, SignedIn } from "@clerk/nextjs";
 import HeaderWeb from "@/components/Header";
 import HeaderMobile from "@/components/header-mobile";
 import Script from "next/script";
@@ -36,6 +36,9 @@ export default function RootLayout({
             <HeaderWeb/>
             {/* <HeaderMobile/> */}
             <PageWrapper>
+            {/* <SignedIn>
+            <RedirectToCreateOrganization/>
+            </SignedIn> */}
             {children}
             </PageWrapper>
             {/* </MarginWidthWrapper> */}
