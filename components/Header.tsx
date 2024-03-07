@@ -47,14 +47,10 @@ function HeaderWeb() {
         <UserButton />
 
         <OrganizationSwitcher createOrganizationUrl="/clerk/create-org"/>
-        
-        </SignedIn>
-        <SignedOut>
-        <SignInButton/>
-        </SignedOut>
-        </div>
         <div className="flex items-center space-x-4">
         <HeaderMobile/>
+        </div>
+        </SignedIn>
         </div>
         </div>
       </div>
