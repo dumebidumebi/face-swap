@@ -1,9 +1,10 @@
 "use client"
 import { Button, buttonVariants } from '@/components/ui/button'
-import { CreateOrganization, SignUpButton, SignOutButton } from '@clerk/nextjs'
+import { CreateOrganization, SignUpButton, SignOutButton, SignedIn, SignedOut, RedirectToCreateOrganization } from '@clerk/nextjs'
 import Image from 'next/image'
 import payrollPic from '@/components/images/payrollPic.png'
 import employeesPic from '@/components/images/employeesPic.png'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -24,10 +25,20 @@ export default function Home() {
         Wage Wire is the easiest way to run payroll. Try it out!
       </p>
       <div className='flex space-x-12 mt-10'>
-      <SignUpButton redirectUrl="/clerk/create-org">
+      {/* <SignUpButton redirectUrl="/clerk/create-org">
       <Button size={"lg"}>Get Started</Button>
-      </SignUpButton>
-      
+      </SignUpButton> */}
+    
+      <SignedIn>
+        <Link href={"/onboarding"}>
+          <Button size={"lg"}>Get Started</Button>
+        </Link>
+      </SignedIn>
+      <SignedOut>
+      <Link href={"/clerk/sign-up"}>
+          <Button size={"lg"}>Sign Up</Button>
+        </Link>
+      </SignedOut>
       
       {/* <Link href="/onboarding">
       <Button size={"lg"}>Get Started</Button>

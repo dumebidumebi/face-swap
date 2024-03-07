@@ -3,6 +3,7 @@ import Link from "next/link";
 // import UserButton from "./UserButton";
 // import Logo from "./Logo";
 import {
+  OrganizationSwitcher,
   RedirectToCreateOrganization,
   RedirectToOrganizationProfile,
   SignedIn,
@@ -37,12 +38,16 @@ function HeaderWeb() {
           >
             <p className="font-bold text-l text-blue-600 flex">Wage</p><span className="font-bold text-l flex">Wire</span>
           </Link>
+          
         </div>
         <div className="mx-40"></div>
         <div>
-        <div className="absolute right-10 mx-5 top-[8px] z-30">
+        <div className=" flex space-x-5 absolute right-10 mx-5 top-[8px] z-30">
         <SignedIn>
         <UserButton />
+
+        <OrganizationSwitcher createOrganizationUrl="/clerk/create-org"/>
+        
         </SignedIn>
         <SignedOut>
         <SignInButton/>
