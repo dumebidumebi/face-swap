@@ -11,16 +11,9 @@ import { Icon } from '@iconify/react';
 
 const SideNav = () => {
   return (
-    <div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
-      <div className="flex flex-col space-y-6 w-full">
-        <Link
-          href="/"
-          className="flex flex-row space-x-0 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full"
-        >
-            <p className="font-bold text-xl text-blue-600 flex">Wage</p><span className="font-bold text-xl flex">Wire</span>
-        </Link>
-
-        <div className="flex flex-col space-y-2  md:px-6 ">
+    <div className="md:w-50 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
+      <div className="flex flex-col space-y-6 w-full ">
+        <div className="flex flex-col space-y-2 mt-5 md:px-6 ">
           {SIDENAV_ITEMS.map((item, idx) => {
             return <MenuItem key={idx} item={item} />;
           })}

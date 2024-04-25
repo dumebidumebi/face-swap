@@ -13,9 +13,6 @@ export default function Home() {
       <h1 className='text-center max-w-4xl text-6xl font-bold md:text-6xl lg:text-8xl'>
         <span className='text-blue-600'>Wage</span>Wire
       </h1>
-    
-
-  
       </div>
       <div className='flex flex-col items-center justify-center'>
       <h1 className='text-center max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
@@ -25,24 +22,17 @@ export default function Home() {
         Wage Wire is the easiest way to run payroll. Try it out!
       </p>
       <div className='flex space-x-12 mt-10'>
-      {/* <SignUpButton redirectUrl="/clerk/create-org">
-      <Button size={"lg"}>Get Started</Button>
-      </SignUpButton> */}
-    
       <SignedIn>
         <Link href={"/onboarding"}>
           <Button size={"lg"}>Get Started</Button>
         </Link>
       </SignedIn>
       <SignedOut>
-      <Link href={"/clerk/sign-up"}>
+        <Link href={"/clerk/sign-up"}>
           <Button size={"lg"}>Sign Up</Button>
         </Link>
       </SignedOut>
       
-      {/* <Link href="/onboarding">
-      <Button size={"lg"}>Get Started</Button>
-      </Link> */}
       </div>
       </div>
   

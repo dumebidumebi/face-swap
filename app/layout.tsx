@@ -26,23 +26,18 @@ export default function RootLayout({
   
   return (
     <ClerkProvider>
-      {/* <Header/> */}
     <html lang="en">
     <head><Script src="http://localhost:3000"></Script></head>
       <body className={`bg-white ${inter.className}`}>
         <div className="flex">
-          {/* <SideNav/> */}
           <main className="flex-1">
-            {/* <MarginWidthWrapper> */}
             <HeaderWeb/>
-            {/* <HeaderMobile/> */}
+            <SideNav/>
+            <MarginWidthWrapper>
             <PageWrapper>
-            {/* <SignedIn>
-            <RedirectToCreateOrganization/>
-            </SignedIn> */}
             {children}
             </PageWrapper>
-            {/* </MarginWidthWrapper> */}
+            </MarginWidthWrapper>
           </main>
         </div>
       </body>

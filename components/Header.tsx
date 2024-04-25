@@ -1,14 +1,8 @@
 'use client'
 import Link from "next/link";
-// import UserButton from "./UserButton";
-// import Logo from "./Logo";
 import {
   OrganizationSwitcher,
-  RedirectToCreateOrganization,
-  RedirectToOrganizationProfile,
   SignedIn,
-  SignedOut,
-  SignInButton,
   UserButton,
 } from "@clerk/nextjs";
 import useScroll from "@/hooks/use-scroll";
@@ -23,7 +17,7 @@ function HeaderWeb() {
   return (
     <div
     className={cn(
-      `sticky inset-x-0 top-0 z-30 w-full transition-all border-b border-gray-200 `,
+      `sticky inset-x-0 top-0 z-30 max-w-full transition-all border-b border-gray-200 `,
       {
         'border-b border-gray-200 bg-white/75 backdrop-blur-lg': scrolled,
         'border-b border-gray-200 bg-white': selectedLayout,
@@ -45,8 +39,6 @@ function HeaderWeb() {
         <div className=" flex space-x-5 absolute right-10 mx-5 top-[8px] z-30">
         <SignedIn>
         <UserButton />
-
-        <OrganizationSwitcher createOrganizationUrl="/clerk/create-org"/>
         <div className="flex items-center space-x-4">
         <HeaderMobile/>
         </div>
