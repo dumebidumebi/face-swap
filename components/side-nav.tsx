@@ -11,7 +11,7 @@ import { Icon } from '@iconify/react';
 
 const SideNav = () => {
   return (
-    <div className="md:w-50 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
+    <div className="sm:w-50 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
       <div className="flex flex-col space-y-6 w-full ">
         <div className="flex flex-col space-y-2 mt-5 md:px-6 ">
           {SIDENAV_ITEMS.map((item, idx) => {
