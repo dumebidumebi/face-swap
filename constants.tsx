@@ -24,3 +24,27 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Folder/>
   },
 ];
+
+export const PRODUCT_ITEMS = [
+  {
+    title: '50 Credits',
+    credits: 50,
+    description: 'A couple of videos',
+    cost: '$10',
+    priceId: 'price_1PBJB0I5A32hK8RPQZpEuOwq'
+  },
+  {
+    title: '100 Credits',
+    credits: 100,
+    description: 'About 100 videos',
+    cost: '$20',
+    priceId: 'price_1PBGXoI5A32hK8RPEEB0MEM3'
+  },  
+  {
+    title: '500 Credits',
+    credits: 500,
+    description: 'For large video needs',
+    cost: '$80',
+    priceId: 'price_1PBGYrI5A32hK8RP81RZZggE'
+  },
+];

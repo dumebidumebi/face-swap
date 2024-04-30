@@ -4,6 +4,7 @@ import {
   OrganizationSwitcher,
   SignedIn,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 import useScroll from "@/hooks/use-scroll";
 import { useSelectedLayoutSegment } from "next/navigation";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 import HeaderMobile from "./header-mobile";
 
 function HeaderWeb() {
+  const { user } = useUser();
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
 
@@ -36,8 +38,10 @@ function HeaderWeb() {
         </div>
         <div className="mx-40"></div>
         <div>
-        <div className=" flex space-x-5 absolute right-10 mx-5 top-[8px] z-30">
+        <div className=" flex items-center space-x-5 absolute right-10 mx-5 top-[8px] z-30">
         <SignedIn>
+        {user?.publicMetadata?.credits ? (<p className="font-medium">Credits: {`${user?.publicMetadata?.credits}`}</p>) :
+        (<p className="text-[#ff0000] font-medium">No Credits</p>)}
         <UserButton />
         <div className="flex items-center space-x-4">
         <HeaderMobile/>

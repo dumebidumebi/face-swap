@@ -33,6 +33,7 @@ async function RunDeepFake(userId: string, targetVid:string, sourceVid:string) {
   return refreshedCompany
 }
 
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function FaceSwap() {
@@ -128,8 +129,7 @@ function FaceSwap() {
   </UploadButton>
      <div className='flex flex-row gap-5'>
      <SignedIn>
-      {!user?.publicMetadata?.subscription ? <Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button> 
-      : <PricingPage title={"Pricing"}/> } 
+      {user?.publicMetadata?.credits ? (<Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>) : (<PricingPage title={"Buy Credits"}/> )}
       {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
      </SignedIn>
      <SignedOut>
