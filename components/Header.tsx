@@ -40,8 +40,7 @@ function HeaderWeb() {
         <div>
         <div className=" flex items-center space-x-5 absolute right-10 mx-5 top-[8px] z-30">
         <SignedIn>
-        {user?.publicMetadata?.credits ? (<p className="font-medium">Credits: {`${user?.publicMetadata?.credits}`}</p>) :
-        (<p className="text-[#ff0000] font-medium">No Credits</p>)}
+        {user?.publicMetadata?.credits && (<p className="font-medium">Credits: {`${user?.publicMetadata?.credits}`}</p>) }
         <UserButton />
         <div className="flex items-center space-x-4">
         <HeaderMobile/>

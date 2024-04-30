@@ -29,7 +29,7 @@ export const PRODUCT_ITEMS = [
   {
     title: '50 Credits',
     credits: 50,
-    description: 'A couple of videos',
+    description: 'About 50 videos',
     cost: '$10',
     priceId: 'price_1PBJB0I5A32hK8RPQZpEuOwq'
   },

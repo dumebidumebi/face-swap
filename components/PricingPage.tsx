@@ -60,7 +60,7 @@ export default function PricingPage(props) {
         <DialogHeader>
         <DialogTitle>Buy Credits</DialogTitle>
         <DialogDescription>
-            You need credits to generate videos! Larger Videos take up more credits.
+            You need credits to generate videos! Larger Videos take up more credits, due to processing time.
         </DialogDescription>
         </DialogHeader>
         {PRODUCT_ITEMS.map(item =>(
