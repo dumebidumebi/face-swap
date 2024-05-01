@@ -14,7 +14,7 @@
         remotePatterns: [
           {
             protocol: "https",
-            hostname: "replicate.com",
+            hostname: "upcdn.io",
           },
           {
             protocol: "https",

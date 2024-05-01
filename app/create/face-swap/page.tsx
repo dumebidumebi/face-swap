@@ -8,6 +8,7 @@ import { UploadButton } from "@bytescale/upload-widget-react"
 import { Upload } from 'lucide-react';
 import ReactPlayer from 'react-player'
 import { zoomies } from 'ldrs'
+import Image from 'next/image';
 
 zoomies.register()
 
@@ -129,7 +130,7 @@ function FaceSwap() {
   </UploadButton>
      <div className='flex flex-row gap-5'>
      <SignedIn>
-      {!user?.publicMetadata?.credits ? (<Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>) : (<Link href={"/pricing-page"}>Buy Credits</Link>)}
+      {user?.publicMetadata?.credits ? (<Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>) : (<Button size='sm' className='w-fit rounded-sm'><Link href={"/pricing-page"}>Buy Credits</Link></Button>)}
       {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
      </SignedIn>
      <SignedOut>
@@ -140,7 +141,7 @@ function FaceSwap() {
      </div>
     </div>
     <div className='sm:ml-5 mb:5 border'/>
-    <div className='flex flex-col h-full gap-2 sm:ml-5'>
+    <div className='flex flex-col h-full gap-2 sm:ml-10'>
      <h1 className='font-semibold text-lg mb-5 mt-5 sm:mt-0'>Output</h1>
     {loading &&(
       <div className='min-w-350  min-h  rounded'>
@@ -160,6 +161,21 @@ function FaceSwap() {
      {prediction?.output && (<ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} />)}
     </div>
     </div>
+    <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
+    <div className='flex flex-col m-5 sm:flex-row max-w-full border-t border-b pt-5 pb-5'>
+    <div className='flex flex-col h-full gap-2 mb-5 min-w-80 sm:pr-10 sm:border-r'>
+     <h1 className='font-semibold text-lg mb-5'>Input</h1>
+     <h1 >Example Source Image</h1>
+     <Image alt='thumbnails' className='rounded-top-sm mb-10' width={300} height={200} src={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRocjt3q-mark.jpg"+"?w=300&h=200&fit=crop&f=webdp"} />
+     <h1 >Example Target Video </h1>
+     <ReactPlayer controls style={{maxWidth:"300px", minInlineSize:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRoh2kGb-heygen-talking-vid.mp4"} />
+    </div>
+    <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
+     <h1 className='font-semibold text-lg mb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
+     <ReactPlayer controls style={{maxWidth:"300px", minInlineSize:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
+    </div>
+    </div>
+    
     </>
   );
 }

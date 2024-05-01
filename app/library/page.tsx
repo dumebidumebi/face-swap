@@ -4,6 +4,9 @@ import { useOrganization, useUser } from '@clerk/nextjs';
 import Spinner from 'react-bootstrap/Spinner';
 import useSWR from 'swr'
 import { useQuery } from '@tanstack/react-query';
+import { redirect, useRouter } from 'next/navigation';
+import { Router } from 'next/router';
+import LibraryCards from '@/components/LibraryCards';
 
 
 
@@ -11,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function Page() {;
   
   const { user } = useUser();
+  const router  = useRouter()
   const [predictions, setPredictions] = useState([])
   async function GetLibrary(userId:string) {
     const refreshedCompany = await fetch("/api/get-library", {
@@ -24,13 +28,21 @@ export default function Page() {;
   const data  = GetLibrary(user?.id).then(
     (data)  => setPredictions(data)
   )
+  
   console.log(data)
     }
   },[])
+
+  
+  
   
 return(
 <>
-{predictions && predictions.map(item => (<p>{item.outputUrl}</p>))}
+<h1 className='text-xl font-bold m-5'>Library</h1>
+<div className='flex border-t pt-10 flex-wrap gap-5'>
+{predictions && predictions.map(item => (<LibraryCards targetVideo={item.input.target_video} swapImage={item.input.swap_image} output={item.outputUrl} />))}
+</div>
+{/* <div><p>{item.input.target_video}</p><p>{item.input.swap_image}</p><p>{item.outputUrl}</p></div> */}
 </>
 )
 }
