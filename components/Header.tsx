@@ -10,6 +10,7 @@ import useScroll from "@/hooks/use-scroll";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { cn } from "@/lib/utils";
 import HeaderMobile from "./header-mobile";
+import PricingPage from "../app/pricing-page/page";
 
 function HeaderWeb() {
   const { user } = useUser();
@@ -33,14 +34,13 @@ function HeaderWeb() {
             className="flex flex-row space-x-0 items-center justify-center  position-fixed top-0 left-40 z-50 "
           >
             <p className="font-bold text-l text-blue-600 flex">Wage</p><span className="font-bold text-l flex">Wire</span>
-          </Link>
-          
+          </Link>       
         </div>
         <div className="mx-40"></div>
         <div>
         <div className=" flex items-center space-x-5 absolute right-10 mx-5 top-[8px] z-30">
         <SignedIn>
-        {user?.publicMetadata?.credits && (<p className="font-medium">Credits: {`${user?.publicMetadata?.credits}`}</p>) }
+        <Link href={"/pricing-page"}>{`Credits: ${user?.publicMetadata?.credits ? user?.publicMetadata?.credits: ''}` }</Link>
         <UserButton />
         <div className="flex items-center space-x-4">
         <HeaderMobile/>

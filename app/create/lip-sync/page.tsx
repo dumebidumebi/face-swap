@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
-import PricingPage from '@/components/PricingPage';
+import PricingPage from '@/app/pricing-page/page';
 import { UploadButton } from "@bytescale/upload-widget-react"
 import { Upload } from 'lucide-react';
 import { zoomies } from 'ldrs'

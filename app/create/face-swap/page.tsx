@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
-import PricingPage from '@/components/PricingPage';
+import PricingPage from '@/app/pricing-page/page';
 import { UploadButton } from "@bytescale/upload-widget-react"
 import { Upload } from 'lucide-react';
 import ReactPlayer from 'react-player'
@@ -129,7 +129,7 @@ function FaceSwap() {
   </UploadButton>
      <div className='flex flex-row gap-5'>
      <SignedIn>
-      {user?.publicMetadata?.credits ? (<Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>) : (<PricingPage title={"Buy Credits"}/> )}
+      {!user?.publicMetadata?.credits ? (<Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>) : (<Link href={"/pricing-page"}>Buy Credits</Link>)}
       {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
      </SignedIn>
      <SignedOut>
