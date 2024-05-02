@@ -5,7 +5,7 @@ import { NextRequest } from "next/server"
 import type  Stripe from "stripe";
 import { arrayUnion, doc, getDoc, runTransaction, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
-import { clerkClient } from "@clerk/nextjs";
+import { clerkClient } from '@clerk/nextjs/server'
 
 
 export async function POST(req: NextRequest) {

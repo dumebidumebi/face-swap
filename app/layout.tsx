@@ -24,9 +24,9 @@ export default function RootLayout({
 }>) {
   
   return (
-    <ClerkProvider proxyUrl={"https://createdeepfakes.com/clerk" }>
+    <ClerkProvider publishableKey={`${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}`}>
     <html lang="en">
-    <head><Script src="http://localhost:3000"></Script></head>
+    <head></head>
       <body className={`bg-white ${inter.className}`}>
         <div className="flex">
           <main className="flex-1">
