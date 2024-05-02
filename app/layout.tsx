@@ -12,8 +12,8 @@ import PageWrapper from "@/components/page-wrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Wage Wire",
-  description: "Wage Wire App",
+  title: "Create Deepfakes",
+  description: "generate AI videos",
 };
 
 
@@ -24,9 +24,9 @@ export default function RootLayout({
 }>) {
   
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={`${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}`}>
     <html lang="en">
-    <head><Script src="http://localhost:3000"></Script></head>
+    <head></head>
       <body className={`bg-white ${inter.className}`}>
         <div className="flex">
           <main className="flex-1">
