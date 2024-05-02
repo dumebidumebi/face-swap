@@ -40,7 +40,7 @@ return(
 <>
 <h1 className='text-xl font-bold m-5'>Library</h1>
 <div className='flex border-t pt-10 flex-wrap gap-5'>
-{predictions && predictions.map(item => (<LibraryCards targetVideo={item.input.target_video} swapImage={item.input.swap_image} output={item.outputUrl} />))}
+{predictions && predictions.map(item => (<LibraryCards key={item.output} targetVideo={item.input.target_video} swapImage={item.input.swap_image} output={item.outputUrl} />))}
 </div>
 {/* <div><p>{item.input.target_video}</p><p>{item.input.swap_image}</p><p>{item.outputUrl}</p></div> */}
 </>

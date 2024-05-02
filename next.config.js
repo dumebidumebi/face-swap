@@ -9,6 +9,7 @@
         // your project has type errors.
         // !! WARN !!
         ignoreBuildErrors: true,
+        
       },
       images: {
         remotePatterns: [

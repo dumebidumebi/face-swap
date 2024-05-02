@@ -1,13 +1,5 @@
 "use client"
 import React, { useState } from 'react'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
 import { Button } from '../../components/ui/button'
 import {
   Card,
@@ -21,16 +13,9 @@ import { PRODUCT_ITEMS } from '@/constants'
 import { Badge } from '../../components/ui/badge'
 import { loadStripe } from '@stripe/stripe-js';
 import { useUser } from '@clerk/nextjs'
-import { zoomies } from 'ldrs'
-import Link from 'next/link'
+import { Loader2 } from 'lucide-react'
+import MyLoader from '@/components/loader'
 
-zoomies.register()
-
-
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-);
-  
 
 async function Checkout(userId:string, priceId:string, credits:number){
   const checkout = await fetch("/api/checkout_sessions", {
@@ -40,7 +25,7 @@ async function Checkout(userId:string, priceId:string, credits:number){
  return checkout
 }
 
-export default function PricingPage(props) {
+export default function Page() {
   const { user } = useUser();
   const userId = user?.id
   const [loading, setLoading] = useState(false)
@@ -67,16 +52,9 @@ export default function PricingPage(props) {
             <CardDescription>{item.description}</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* <p>Card Content</p> */}
           </CardContent>
           <CardFooter>
-          <Button size='sm'  onClick={() => HandleCheckout(userId, item.priceId, item.credits)} className='w-fit min-w-20 rounded-sm'>{loading? <l-zoomies
-        size="100"
-        stroke="5"
-        bg-opacity="0.1"
-        speed="1.4" 
-        color="white" 
-        ></l-zoomies>: `Buy for ${item.cost}`}</Button> 
+          <Button size='sm'  onClick={() => HandleCheckout(userId, item.priceId, item.credits)} className='w-fit min-w-20 rounded-sm'>{loading? <MyLoader/> : `Buy for ${item.cost}`}</Button> 
           </CardFooter>
         </Card>
         ))}

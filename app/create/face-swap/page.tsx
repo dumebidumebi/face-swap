@@ -7,19 +7,17 @@ import PricingPage from '@/app/pricing-page/page';
 import { UploadButton } from "@bytescale/upload-widget-react"
 import { Upload } from 'lucide-react';
 import ReactPlayer from 'react-player'
-import { zoomies } from 'ldrs'
 import Image from 'next/image';
-
-zoomies.register()
+import MyLoader from '@/components/loader';
 
 // Default values shown
 
 
 
-async function cancelPrediction(predict: Object) {
+async function cancelPrediction(predict: string) {
   const cancel = await fetch("/api/face-swap-cancel", {
     method: "POST",
-    body: JSON.stringify({predictionId: predict?.id}),
+    body: JSON.stringify({predictionId: predict}),
   }).then((res) => res.json());
 
   window.location.reload()
@@ -37,7 +35,7 @@ async function RunDeepFake(userId: string, targetVid:string, sourceVid:string) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function FaceSwap() {
+function Page() {
   const options = {
     apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC", // This is your API key.
     maxFileCount: 1
@@ -53,7 +51,7 @@ function FaceSwap() {
 
   
   async function cancel(){
-    cancelPrediction(prediction)
+    cancelPrediction(prediction?.id)
   }
   async function uploadFile(){
     if (targetVid == null) return;
@@ -145,13 +143,7 @@ function FaceSwap() {
      <h1 className='font-semibold text-lg mb-5 mt-5 sm:mt-0'>Output</h1>
     {loading &&(
       <div className='min-w-350  min-h  rounded'>
-        <l-zoomies
-          size="100"
-          stroke="5"
-          bg-opacity="0.1"
-          speed="1.4" 
-          color="black" 
-        ></l-zoomies>
+        <MyLoader/> 
       </div>)
       }
      {error && <div className='text-[#ff0000] font-extralight'>Error:{error}</div>}
@@ -182,4 +174,4 @@ function FaceSwap() {
 
 
 
-export default FaceSwap
+export default Page

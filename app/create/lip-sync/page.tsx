@@ -1,21 +1,20 @@
 "use client"
 import { Button } from '@/components/ui/button';
 import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import Link from 'next/link';
 import PricingPage from '@/app/pricing-page/page';
 import { UploadButton } from "@bytescale/upload-widget-react"
 import { Upload } from 'lucide-react';
-import { zoomies } from 'ldrs'
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
+import MyLoader from '@/components/loader';
 
-zoomies.register()
-
-async function cancelPrediction(predict: Object) {
+async function cancelPrediction(predict: string) {
   const cancel = await fetch("/api/lip-sync-cancel", {
     method: "POST",
-    body: JSON.stringify({predictionId: predict?.id}),
+    body: JSON.stringify({predictionId: predict}),
   }).then((res) => res.json());
 
   window.location.reload()
@@ -32,7 +31,7 @@ async function RunLipSync(userId: string, targetVid:string, sourceAud:string) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function LipSync() {
+function Page() {
   const options = {
     apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC", // This is your API key.
     maxFileCount: 1
@@ -48,7 +47,7 @@ function LipSync() {
   const [prediction, setPrediction] = useState(null);
 
   async function cancel(){
-    cancelPrediction(prediction)
+    cancelPrediction(prediction?.id)
   }
   async function uploadFile(){
     if (targetVid == null) return;
@@ -126,6 +125,7 @@ function LipSync() {
   <div className='flex flex-row gap-5'>
      <SignedIn>
       {user?.publicMetadata?.credits ? <Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>  : (<Button size='sm' className='w-fit rounded-sm'><Link href={"/pricing-page"}>Buy Credits</Link></Button>)} 
+      {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
      </SignedIn>
      <SignedOut>
       <Link href={"/clerk/sign-in"}>
@@ -139,20 +139,14 @@ function LipSync() {
      <h1 className='font-semibold text-lg mb-5 mt-5 sm:mt-0'>Output</h1>
     {loading &&(
       <div className='min-w-350  min-h  rounded'>
-        <l-zoomies
-          size="100"
-          stroke="5"
-          bg-opacity="0.1"
-          speed="1.4" 
-          color="black" 
-        ></l-zoomies>
+        <MyLoader/> 
       </div>)
       }
      {error && <div className='text-[#ff0000] font-extralight'>Error:{error}</div>}
      {prediction && (
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
-     {prediction?.output && (<ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} />)}
+     {prediction?.output && (<Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}><ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} /></Suspense>)}
     </div>
     </div>
     <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
@@ -162,11 +156,15 @@ function LipSync() {
      <h1 >Example Target Video or Image</h1>
      <Image alt='thumbnails' className='rounded-top-sm mb-10' width={300} height={200} src={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRocjt3q-mark.jpg"+"?w=300&h=200&fit=crop&f=webdp"} />
      <h1 >Example Audio Source </h1>
+     <Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}>
      <ReactPlayer controls style={{maxWidth:"300px", minInlineSize:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRoh2kGb-heygen-talking-vid.mp4"} />
+    </Suspense>
     </div>
     <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
      <h1 className='font-semibold text-lg mb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
+     <Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}>
      <ReactPlayer controls style={{maxWidth:"300px", minInlineSize:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keKRqYJ88-file.mp4"} />
+     </Suspense>
     </div>
     </div>
     </>
@@ -175,4 +173,4 @@ function LipSync() {
 
 
 
-export default LipSync
+export default Page
