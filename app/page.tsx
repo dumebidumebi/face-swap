@@ -10,20 +10,20 @@ export default function Home() {
   return (
     <>
       <div className='flex flex-col items-center justify-center mt-10 mb-10'>
-      <h1 className='text-center max-w-4xl text-6xl font-bold md:text-6xl lg:text-8xl'>
-        <span className='text-blue-600'>Wage</span>Wire
+      <h1 className='text-center max-w-2xl text-2xl font-bold '>
+        <span className='text-blue-600'>create</span>deepfakes.com
       </h1>
       </div>
       <div className='flex flex-col items-center justify-center'>
       <h1 className='text-center max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
-     <span className='text-blue-600'>Run Payroll</span> in minutes!
+     <span className='text-blue-600'>create AI videos</span> in minutes!
       </h1>
       <p className='text-center mx-5 mt-5 max-w-prose text-zinc-700 sm:text-lg'>
-        Wage Wire is the easiest way to run payroll. Try it out!
+        The easiest way to create AI videos. Try it out!
       </p>
       <div className='flex space-x-12 mt-10'>
       <SignedIn>
-        <Link href={"/onboarding"}>
+        <Link href={"/create/face-swap"}>
           <Button size={"lg"}>Get Started</Button>
         </Link>
       </SignedIn>

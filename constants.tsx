@@ -11,7 +11,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: 'Create',
-    path: '',
+    path: '/create',
     icon: <BadgePlus />,
     submenu: true,
     subMenuItems: [

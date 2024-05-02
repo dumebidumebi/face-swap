@@ -33,7 +33,7 @@ function HeaderWeb() {
             href="/"
             className="flex flex-row space-x-0 items-center justify-center  position-fixed top-0 left-40 z-50 "
           >
-            <p className="font-bold text-l text-blue-600 flex">Wage</p><span className="font-bold text-l flex">Wire</span>
+            <p className="font-bold text-l text-blue-600 flex">create</p><span className="font-bold text-l flex">deepfakes</span>
           </Link>       
         </div>
         <div className="mx-40"></div>

@@ -15,8 +15,8 @@ export async function POST(req: NextRequest) {
     const input = {
       face: targetVid,
       input_audio: sourceAud,
-      audio_duration: 5
     }
+    //   audio_duration: 5
 
     // const output = await replicate.run(
     //   "xiankgx/video-retalking:1e959997f54af5daa345d6c063f9abeef361029e730d4f57e876e2d5b31b5e9b",

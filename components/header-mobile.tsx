@@ -100,7 +100,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
     onClick={toggle}
     className="pointer-events-auto absolute right-5 top-[14px] z-30"
   >
-    <svg width="23" height="23" viewBox="0 0 23 23">
+    <svg width="20" height="20" viewBox="0 0 23 23">
       <Path
         variants={{
           closed: { d: 'M 2 2.5 L 20 2.5' },

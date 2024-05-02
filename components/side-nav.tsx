@@ -11,7 +11,7 @@ import { Icon } from '@iconify/react';
 
 const SideNav = () => {
   return (
-    <div className="sm:w-50 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
+    <div className="sm:w-50 bg-white h-screen flex-1 fixed  border-zinc-200 hidden md:flex">
       <div className="flex flex-col space-y-6 w-full ">
         <div className="flex flex-col space-y-2 mt-5 md:px-6 ">
           {SIDENAV_ITEMS.map((item, idx) => {
@@ -44,7 +44,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
           >
             <div className="flex flex-row space-x-4 items-center">
               {item.icon}
-              <span className="font-semibold text-xl  flex">{item.title}</span>
+              <span className="font-semibold text-l  flex">{item.title}</span>
             </div>
 
             <div className={`${subMenuOpen ? 'rotate-180' : ''} flex`}>
@@ -78,7 +78,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
           }`}
         >
           {item.icon}
-          <span className="font-semibold text-xl flex">{item.title}</span>
+          <span className="font-semibold text-l flex">{item.title}</span>
         </Link>
       )}
     </div>
