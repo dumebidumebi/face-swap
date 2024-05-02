@@ -12,8 +12,8 @@ import PageWrapper from "@/components/page-wrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Wage Wire",
-  description: "Wage Wire App",
+  title: "Create Deepfakes",
+  description: "generate AI videos",
 };
 
 
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   
   return (
-    <ClerkProvider>
+    <ClerkProvider proxyUrl={"https://createdeepfakes.com/clerk" }>
     <html lang="en">
     <head><Script src="http://localhost:3000"></Script></head>
       <body className={`bg-white ${inter.className}`}>
