@@ -7,11 +7,13 @@ export async function POST(req: NextRequest) {
   const priceId = body?.priceId
   const userId = body?.userId
   const credits = body?.credits
+  const tolt_referral = body?.referral
 
   const session = await stripe.checkout.sessions.create({
     metadata:{
       userId: userId,
-      credits: credits
+      credits: credits,
+      tolt_referral: tolt_referral,
     },
     line_items: [
       {
