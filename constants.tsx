@@ -31,7 +31,7 @@ export const PRODUCT_ITEMS = [
     credits: 50,
     description: 'About 50 videos',
     cost: '$10',
-    priceId: 'price_1PBJB0I5A32hK8RPQZpEuOwq'
+    priceId: 'price_1PBGUbI5A32hK8RPTRnrLuKS'
   },
   {
     title: '100 Credits',

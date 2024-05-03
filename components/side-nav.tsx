@@ -18,6 +18,7 @@ const SideNav = () => {
             return <MenuItem key={idx} item={item} />;
           })}
         </div>
+       
       </div>
     </div>
   );
@@ -33,6 +34,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
   };
 
   return (
+    <>
     <div className="">
       {item.submenu ? (
         <>
@@ -81,6 +83,9 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
           <span className="font-semibold text-l flex">{item.title}</span>
         </Link>
       )}
+    
     </div>
+    </>
   );
 };
+
