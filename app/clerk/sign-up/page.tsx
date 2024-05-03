@@ -9,7 +9,7 @@ export default function SignUpPage() {
     // IF ORGANIZATION HAS BEEN MADE PREVENT FORM FROM BEING SUBMITTED
    <>
    <div className="flex justify-center">
-    <SignUp afterSignUpUrl="/create/face-swap" afterSignInUrl="/create/face-swap"></SignUp>
+    <SignUp routing="hash"  afterSignUpUrl="/create/face-swap" afterSignInUrl="/create/face-swap"></SignUp>
     </div>
       </>
   );

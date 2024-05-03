@@ -6,7 +6,7 @@ function SignInPage() {
 return (
   <>
   <div className="flex justify-center">
-  <SignIn afterSignInUrl="/create/face-swap"></SignIn>
+  <SignIn routing="hash" afterSignInUrl="/create/face-swap"></SignIn>
   </div>
   </>
 )
