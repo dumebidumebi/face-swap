@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/ui/button'
 import {
   Card,
@@ -17,10 +17,10 @@ import { Loader2 } from 'lucide-react'
 import MyLoader from '@/components/loader'
 
 
-async function Checkout(userId:string, priceId:string, credits:number){
+async function Checkout(userId:string, priceId:string, credits:number, referral:string){
   const checkout = await fetch("/api/checkout_sessions", {
     method: "POST",
-    body: JSON.stringify({userId: userId, priceId:priceId, credits:credits}),
+    body: JSON.stringify({userId: userId, priceId:priceId, credits:credits, referral}),
   }).then((res) => res.json());
  return checkout
 }
@@ -29,10 +29,17 @@ export default function Page() {
   const { user } = useUser();
   const userId = user?.id
   const [loading, setLoading] = useState(false)
+  const tolt = window.tolt_referral
 
+ useEffect(() => {
+   console.log(tolt)
+   console.log(window)
+ }, [])
+ 
   async function HandleCheckout(userId:string, priceId:string, credits:number) {
     setLoading(true)
-    const url = await Checkout(userId, priceId, credits)
+    window.tolt.signup(user?.primaryEmailAddress)
+    const url = await Checkout(userId, priceId, credits, tolt)
     setLoading(false)
     if(window.location){
     window.location = url
@@ -40,6 +47,7 @@ export default function Page() {
   }
   return (
     <div className='flex flex-col justify-center'>
+      <script async src="https://cdn.tolt.io/tolt.js" data-tolt="YOUR-ID"></script>
       <div className='mb-10 mt-5'>
      <h1 className='font-bold text-center'>Buy Credits</h1>
       <p className='text-center'>You need credits to generate videos! Larger Videos take up more credits, due to processing time.</p>

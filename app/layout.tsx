@@ -26,7 +26,9 @@ export default function RootLayout({
   return (
     <ClerkProvider publishableKey={`${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}`}>
     <html lang="en">
-    <head></head>
+    <head>
+    <script async src="https://cdn.tolt.io/tolt.js" data-tolt="47e79a35-f79e-4f86-a0d4-4599117dfd75"></script>
+    </head>
       <body className={`bg-white ${inter.className}`}>
         <div className="flex">
           <main className="flex-1">
