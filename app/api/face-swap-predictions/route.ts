@@ -4,7 +4,7 @@ import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import Replicate from 'replicate';
 import { uploadFromUrl } from "@/lib/uploadFromUrl";
-import { clerkClient } from "@clerk/nextjs";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
