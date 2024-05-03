@@ -5,7 +5,7 @@ import { NextRequest } from "next/server"
 import type  Stripe from "stripe";
 import { doc, runTransaction } from "firebase/firestore";
 import { db } from "@/firebase";
-import { clerkClient } from "@clerk/nextjs";
+import { clerkClient } from "@clerk/nextjs/server";
 
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
