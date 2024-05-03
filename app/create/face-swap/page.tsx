@@ -160,11 +160,11 @@ function Page() {
      <h1 >Example Source Image</h1>
      <Image alt='thumbnails' className='rounded-top-sm mb-10' width={300} height={200} src={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRocjt3q-mark.jpg"+"?w=300&h=200&fit=crop&f=webdp"} />
      <h1 >Example Target Video </h1>
-     <ReactPlayer controls style={{maxWidth:"300px", minInlineSize:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRoh2kGb-heygen-talking-vid.mp4"} />
+     <ReactPlayer controls style={{maxWidth:"300px", maxHeight:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRoh2kGb-heygen-talking-vid.mp4"} />
     </div>
     <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
-     <h1 className='font-semibold text-lg mb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
-     <ReactPlayer controls style={{maxWidth:"300px", minInlineSize:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
+     <h1 className='font-semibold text-lg mb-10 pb-2.5 mt-5  ml-0 sm:mt-0'>Output</h1>
+     <ReactPlayer controls style={{maxWidth:"400px", maxHeight:"300px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
     </div>
     </div>
     
