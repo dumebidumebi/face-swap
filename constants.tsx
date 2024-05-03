@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { SideNavItem } from './types';
-import { BadgePlus, Folder} from 'lucide-react';
+import { BadgePlus, CircleDollarSign, Folder} from 'lucide-react';
 
 
 export const SIDENAV_ITEMS: SideNavItem[] = [
@@ -22,6 +22,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'Library',
     path: '/library',
     icon: <Folder/>
+  },
+  {
+    title: 'Affiliate',
+    path: 'https://createdeepakes.tolt.io/login',
+    icon: <CircleDollarSign/>
   },
 ];
 
