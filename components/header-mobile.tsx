@@ -9,7 +9,6 @@ import { SIDENAV_ITEMS } from '@/constants';
 import { SideNavItem } from '@/types';
 import { Icon } from '@iconify/react';
 import { motion, useCycle } from 'framer-motion';
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 type MenuItemWithSubMenuProps = {
   item: SideNavItem;
@@ -98,8 +97,9 @@ export default HeaderMobile;
 const MenuToggle = ({ toggle }: { toggle: any }) => (
   <button
     onClick={toggle}
-    className="pointer-events-auto absolute right-5 top-[14px] z-30"
+    className="pointer-events-auto fixed right-5 top-[14px] z-30"
   >
+    {/*   */}
     <svg width="20" height="20" viewBox="0 0 23 23">
       <Path
         variants={{
@@ -127,7 +127,7 @@ const MenuToggle = ({ toggle }: { toggle: any }) => (
 
 const Path = (props: any) => (
   <motion.path
-    fill="transparent"
+    // fill="transparent"
     strokeWidth="2"
     stroke="hsl(0, 0%, 18%)"
     strokeLinecap="round"

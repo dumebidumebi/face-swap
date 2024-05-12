@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Deepfakes",
-  description: "generate AI videos",
+  description: "Create AI deepfakes and lip sync videos easily with CreateDeepFakes. Generate realistic videos with our powerful AI technology.",
 };
 
 

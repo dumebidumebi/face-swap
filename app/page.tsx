@@ -17,7 +17,7 @@ export default function Home() {
       </h1>
       </div>
       <div className='flex flex-col items-center justify-center'>
-      <h1 className='text-center max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
+      <h1 className='text-center max-w-fit sm:max-w-4xl text text-wrap text-4xl font-bold md:text-6xl lg:text-7xl'>
      <span className='text-blue-600'>create AI videos</span> in minutes!
       </h1>
       <p className='text-center mx-5 mt-5 max-w-prose text-zinc-700 sm:text-lg'>

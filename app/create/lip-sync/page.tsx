@@ -10,6 +10,10 @@ import ReactPlayer from 'react-player';
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import MyLoader from '@/components/loader';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import ScrollToBottom from 'react-scroll-to-bottom';
+// Default values shown
+
 
 async function cancelPrediction(predict: string) {
   const cancel = await fetch("/api/lip-sync-cancel", {
@@ -52,6 +56,10 @@ function Page() {
   async function uploadFile(){
     if (targetVid == null) return;
     if (sourceAud == null) return
+    if(error){
+      setError(null)
+      setPrediction(null)
+      }
     setLoading(true)
     const predict = await RunLipSync(user?.id, targetVid, sourceAud)
     setPrediction(predict)
@@ -147,6 +155,18 @@ function Page() {
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
      {prediction?.output && (<Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}><ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} /></Suspense>)}
+     <Accordion type="single" collapsible className=''>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Show Logs</AccordionTrigger>
+        <AccordionContent className='bg-slate-200 overflow-y-scroll h-20'>
+        <ScrollToBottom style={{maxHeight: 300, width:400}} >
+        {prediction?.logs && (<p>{prediction?.logs}
+        </p>)}
+        </ScrollToBottom>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+
     </div>
     </div>
     <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
