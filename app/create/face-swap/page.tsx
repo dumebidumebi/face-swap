@@ -9,7 +9,8 @@ import { Upload } from 'lucide-react';
 import ReactPlayer from 'react-player'
 import Image from 'next/image';
 import MyLoader from '@/components/loader';
-
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import ScrollToBottom from 'react-scroll-to-bottom';
 // Default values shown
 
 
@@ -56,6 +57,10 @@ function Page() {
   async function uploadFile(){
     if (targetVid == null) return;
     if (sourceVid == null) return
+    if(error){
+      setError(null)
+      setPrediction(null)
+      }
     setLoading(true)
     const predict = await RunDeepFake(user?.id, targetVid, sourceVid)
     setPrediction(predict)
@@ -142,8 +147,8 @@ function Page() {
     <div className='flex flex-col h-full gap-2 sm:ml-10'>
      <h1 className='font-semibold text-lg mb-5 mt-5 sm:mt-0'>Output</h1>
     {loading &&(
-      <div className='min-w-350  min-h  rounded'>
-        <MyLoader/> 
+      <div className='min-w-350 min-h  rounded'>
+      <MyLoader/> 
       </div>)
       }
      {error && <div className='text-[#ff0000] font-extralight'>Error:{error}</div>}
@@ -151,6 +156,18 @@ function Page() {
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
      {prediction?.output && (<ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} />)}
+     <Accordion type="single" collapsible className=''>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Show Logs</AccordionTrigger>
+        <AccordionContent className='bg-slate-200 overflow-y-scroll h-20'>
+        <ScrollToBottom style={{maxHeight: 300, width:400}} >
+        {prediction?.logs && (<p>{prediction?.logs}
+        </p>)}
+        </ScrollToBottom>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+
     </div>
     </div>
     <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
