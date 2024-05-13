@@ -166,7 +166,6 @@ function Page() {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-
     </div>
     </div>
     <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
