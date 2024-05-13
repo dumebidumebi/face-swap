@@ -155,10 +155,10 @@ function Page() {
      {prediction && (
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
-     {prediction?.output && (<ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} />)}
-     <Accordion type="single" collapsible className=''>
+     {prediction?.output && (<ReactPlayer controls style={{maxWidth:"400px", minWidth:"200px"}} url={prediction?.output} />)}
+     <Accordion type="single" collapsible className='w-fit max-w-80'>
       <AccordionItem value="item-1">
-        <AccordionTrigger>Show Logs</AccordionTrigger>
+        <AccordionTrigger >Show Logs</AccordionTrigger>
         <AccordionContent className='bg-slate-200 overflow-y-scroll h-20'>
         <ScrollToBottom style={{maxHeight: 300, width:400}} >
         {prediction?.logs && (<p>{prediction?.logs}
@@ -180,8 +180,8 @@ function Page() {
      <ReactPlayer controls style={{maxWidth:"300px", maxHeight:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRoh2kGb-heygen-talking-vid.mp4"} />
     </div>
     <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
-     <h1 className='font-semibold text-lg mb-10 pb-2.5 mt-5  ml-0 sm:mt-0'>Output</h1>
-     <ReactPlayer controls style={{maxWidth:"400px", maxHeight:"300px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
+     <h1 className='font-semibold text-lg mb-10 pb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
+     <ReactPlayer controls style={{maxWidth:"300px", maxHeight:"200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
     </div>
     </div>
     

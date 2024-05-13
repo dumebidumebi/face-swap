@@ -155,7 +155,7 @@ function Page() {
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
      {prediction?.output && (<Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}><ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} /></Suspense>)}
-     <Accordion type="single" collapsible className=''>
+     <Accordion type="single" collapsible className='w-fit max-w-80'>
       <AccordionItem value="item-1">
         <AccordionTrigger>Show Logs</AccordionTrigger>
         <AccordionContent className='bg-slate-200 overflow-y-scroll h-20'>
@@ -166,7 +166,6 @@ function Page() {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-
     </div>
     </div>
     <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
@@ -181,9 +180,9 @@ function Page() {
     </Suspense>
     </div>
     <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
-     <h1 className='font-semibold text-lg mb-10 pb-2.5 mt-5  ml-0 sm:mt-0'>Output</h1>
+     <h1 className='font-semibold text-lg mb-10 pb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
      <Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}>
-     <ReactPlayer controls style={{maxWidth:"400px", maxHeight: "300px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keKRqYJ88-file.mp4"} />
+     <ReactPlayer controls style={{maxWidth:"300px", maxHeight: "200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keKRqYJ88-file.mp4"} />
      </Suspense>
     </div>
     </div>
