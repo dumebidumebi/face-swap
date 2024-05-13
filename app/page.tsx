@@ -49,14 +49,14 @@ export default function Home() {
         }}className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] smw-[72.1875rem]'></div>
       </div>
       <div>
-        <div className='mx-auto max-w-4xl px-6 lg:px-8'>
+        <div className='mx-auto max-w-4xl  lg:px-8'>
           <div className='mt-16 flow-root sm:mt-24'>
-            <div className='-m-2 flex flex-colrounded-xl bg-gray-900//5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-2 lg:rounded-2xl lg:p-2'>
+            <div className='-m-2 flex flex-col justify-center bg-gray-900//5 p-2  border-t border-b border-gray-900/10 lg:-m-2 lg:p-2'>
               {/* image here */}
 
     {/* <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1> */}
-    <div className='flex flex-col sm:items-start items-center m-5 sm:flex-row max-w-full border-t border-b pt-5 pb-5'>
-    <div className='flex flex-col  sm:items-start items-center  h-full gap-2 mb-5 min-w-80 sm:pr-10 sm:border-r'>
+    <div className='flex flex-col justify-center sm:items-start items-center sm:flex-row max-w-full'>
+    <div className='flex flex-col justify-center  sm:items-start items-center  h-full gap-1 min-w-80 sm:border-r'>
      <h1 className='font-semibold text-lg mb-5'>Input</h1>
      
      <Image alt='thumbnails' className='rounded-top-sm ' width={300} height={200} src={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRocjt3q-mark.jpg"+"?w=300&h=200&fit=crop&f=webdp"} />
@@ -65,8 +65,8 @@ export default function Home() {
      <h1 className='font-thin'>Example Target Video </h1>
     </div>
     <div className='flex flex-col sm:items-start items-center  h-full sm:pl-10 sm:ml-0'>
-     <h1 className='font-semibold text-lg mb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
-     <ReactPlayer controls style={{maxWidth:"400px", maxHeight:"300px", }} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
+     <h1 className='font-semibold text-lg mt-5 mb-1 ml-0 sm:mt-0'>Output</h1>
+     <ReactPlayer controls style={{maxWidth:"300px", maxHeight:"250px", }} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/01/4keRnQo86H-file.mp4"} />
     </div>
     </div>
               </div>
@@ -104,11 +104,11 @@ export default function Home() {
           </div>
         </li>
       </ol>
-      <div className='mx-auto flex flex-col justify-center max-w-4xl px-6 lg:px-8'>
+      <div className=' flex flex-col justify-center max-w-full lg:px-8'>
           <div className='mt-16 flow-root sm:mt-24'>
-            <div className='-m-2 rounded-xl bg-gray-900//5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-2 lg:rounded-2xl lg:p-2'>
+            <div className='rounded-xl bg-gray-900//5 p-0 ring-1 ring-inset ring-gray-900/10 lg:-m-2 lg:rounded-2xl lg:p-2'>
             {/* image here */}
-            <Image src={interfacePic} width={900} height={1000} alt='employees page user interface' />
+            <Image src={interfacePic} className='min-w-50' width={800} height={1000} alt='employees page user interface' />
             </div>
           </div>
           <div className='items-center flex pt-20'>
