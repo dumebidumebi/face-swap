@@ -7,6 +7,8 @@ import interfacePic from '@/components/images/interfacePic.png'
 import Link from 'next/link'
 import { Instagram } from 'lucide-react'
 import ReactPlayer from 'react-player'
+import { Suspense } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Home() {
   return (
@@ -106,10 +108,20 @@ export default function Home() {
       </ol>
       <div className=' flex flex-col justify-center max-w-full lg:px-8'>
           <div className='mt-16 flow-root sm:mt-24'>
-            <div className='rounded-xl bg-gray-900//5 p-0 ring-1 ring-inset ring-gray-900/10 lg:-m-2 lg:rounded-2xl lg:p-2'>
-            {/* image here */}
-            <Image src={interfacePic} className='min-w-50' width={800} height={1000} alt='employees page user interface' />
-            </div>
+          <h1 className='text-xl font-bold mb-5 ml-5 mt-10'>Examples</h1>
+    <div className='flex flex-col m-5 sm:flex-row max-w-full border-t border-b pt-5 pb-5'>
+    <div className='flex flex-col h-full gap-2 mb-5 min-w-80 sm:pr-10 sm:border-r'>
+     <h1 className='font-semibold text-lg mb-5'>Input</h1>
+     <h1 >Example Text</h1>
+     <p className='w-96 italic font-light'>and to be honest, um, im not sure I can be doing this for much longer. um, I mean, its been over 20 years and uh, you know, my body is aging.</p>
+    </div>
+    <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
+     <h1 className='font-semibold text-lg mb-10 pb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
+     <Suspense fallback={<Skeleton className="h-[200px] w-[300px] rounded-xl" />}>
+     <ReactPlayer controls style={{maxWidth:"300px", maxHeight: "200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/23/4kbXxmhJ43-file.mp4"} />
+     </Suspense>
+    </div>
+    </div>
           </div>
           <div className='items-center flex pt-20'>
           <Link className='pl-2 flex flex-row' href={"https://www.instagram.com/dume.bi/?hl=en"}>

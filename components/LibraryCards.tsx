@@ -20,19 +20,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import ReactPlayer from 'react-player'
+import { Skeleton } from './ui/skeleton'
 
 
 
 
 export default function LibraryCards(props) {
+ 
 
   return (
 
           <Card className='min-w-40 max-w-60 p-0 rounded-none' key={props.input}>
           <CardContent className='mt-0 p-0'>
-          <Suspense>
+          
           <Image alt='thumbnails' className='rounded-top-sm' width={300} height={200} src={"https://upcdn.io/12a1yvy/image"+ props.output.slice(28)+"?w=300&h=200&fit=crop&f=webdp"} />
-          </Suspense>
+         
           </CardContent>
           <CardFooter className='p-2 gap-2'>
                       <Dialog>

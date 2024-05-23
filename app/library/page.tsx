@@ -1,12 +1,18 @@
 "use client"
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useOrganization, useUser } from '@clerk/nextjs';
 import Spinner from 'react-bootstrap/Spinner';
 import useSWR from 'swr'
 import { useQuery } from '@tanstack/react-query';
 import { redirect, useRouter } from 'next/navigation';
 import { Router } from 'next/router';
-import LibraryCards from '@/components/LibraryCards';
+// import LibraryCards from '@/components/LibraryCards';
+import { Skeleton } from '@/components/ui/skeleton';
+import dynamic from 'next/dynamic'
+ 
+const LibraryCards = dynamic(() => import('@/components/LibraryCards'), {
+  ssr: false, loading: () => <Skeleton className="h-[200px] w-[300px]  rounded-xl" />,
+})
 
 
 
@@ -40,7 +46,10 @@ return(
 <>
 <h1 className='text-xl font-bold m-5'>Library</h1>
 <div className='flex border-t pt-10 flex-wrap gap-5'>
-{predictions && predictions.map(item => (<LibraryCards key={item.output} targetVideo={item.input.target_video} swapImage={item.input.swap_image} output={item.outputUrl} />))}
+{/* {!predictions && <Skeleton className="h-[200px] w-[300px] rounded-xl" /> } */}
+{predictions && predictions.map(item => (
+<LibraryCards key={item.output} targetVideo={item.input.target_video} swapImage={item.input.swap_image} output={item.outputUrl} />
+))}
 </div>
 {/* <div><p>{item.input.target_video}</p><p>{item.input.swap_image}</p><p>{item.outputUrl}</p></div> */}
 </>

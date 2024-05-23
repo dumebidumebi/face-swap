@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { SideNavItem } from './types';
-import { BadgePlus, CircleDollarSign, Folder} from 'lucide-react';
+import { BadgePlus, CircleDollarSign, Folder, Mic2, PersonStanding} from 'lucide-react';
 
 
 export const SIDENAV_ITEMS: SideNavItem[] = [
@@ -22,6 +22,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'Library',
     path: '/library',
     icon: <Folder/>
+  },
+  {
+    title: 'Avatars',
+    path: '/avatars',
+    icon: <PersonStanding/>
   },
   {
     title: 'Affiliate',
@@ -51,5 +56,26 @@ export const PRODUCT_ITEMS = [
     description: 'For large video needs',
     cost: '$80',
     priceId: 'price_1PBGYrI5A32hK8RP81RZZggE'
+  },
+];
+
+export const AVATARS = [
+  {
+    title: 'MKBeeHD',
+    videoUrl: 'https://upcdn.io/12a1yvy/raw/uploads/2024/05/mkbhd-usable.mp4',
+    customThumbnail: 'https://upcdn.io/12a1yvy/raw/Screenshot%202024-05-22%20at%2023.20.36.png?w=300&h=3=200&f=webp&fit=crop',
+    createdBy: 'cd team'
+  },
+  {
+    title: 'Leebron',
+    videoUrl: 'https://upcdn.io/12a1yvy/raw/lebron%20talking.mp4',
+    customThumbnail: 'https://upcdn.io/12a1yvy/image/lebron.webp?w=300&h=200&f=webp&fit=crop',
+    createdBy: 'cd team'
+  },
+  {
+    title: 'Mark Goldbridge',
+    videoUrl: 'https://upcdn.io/12a1yvy/raw/goldbridge%20talking.mp4',
+    customThumbnail: 'https://upcdn.io/12a1yvy/raw/Screenshot%202024-05-22%20at%2023.17.41.png?w=300&h=200&f=webp&fit=crop',
+    createdBy: 'cd team'
   },
 ];

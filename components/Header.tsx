@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   OrganizationSwitcher,
   SignedIn,
+  SignedOut,
   UserButton,
   useUser,
 } from "@clerk/nextjs";
@@ -11,6 +12,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { cn } from "@/lib/utils";
 import HeaderMobile from "./header-mobile";
 import PricingPage from "../app/pricing-page/page";
+import { Button } from "./ui/button";
 
 function HeaderWeb() {
   const { user } = useUser();
@@ -43,6 +45,11 @@ function HeaderWeb() {
         <Link href={"/pricing-page"}>{`Credits: ${user?.publicMetadata?.credits ? user?.publicMetadata?.credits: ''}` }</Link>
         <UserButton />
         </SignedIn>
+        <SignedOut>
+        <Link href={"/clerk/sign-up"}>
+          <Button className="rounded-sm" size={"sm"}>Sign Up</Button>
+        </Link>
+      </SignedOut>
         </div>
         <HeaderMobile/>
         </div>
