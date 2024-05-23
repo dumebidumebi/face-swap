@@ -56,11 +56,12 @@ export async function POST(req: NextRequest) {
     const textToSpeechInput = {
       "text": sourceText,
       "seed": 6,
-      "preset": "fast",
+      "preset": "high_quality",
       "voice_a": "custom_voice",
-      "voice_b": "disabled",
-      "voice_c": "disabled",
-      "custom_voice": returnObj.summary.result.artifactUrl
+      "voice_b": "custom_voice",
+      "voice_c": "custom_voice",
+      "custom_voice": returnObj.summary.result.artifactUrl,
+      "cvvp_amount": 0.1,
     }
   
     const prediction = await replicate.predictions.create({
