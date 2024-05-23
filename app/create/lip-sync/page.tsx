@@ -234,7 +234,7 @@ function Page() {
     <div className='flex flex-col h-full gap-2 mb-5 min-w-80 sm:pr-10 sm:border-r'>
      <h1 className='font-semibold text-lg mb-5'>Input</h1>
      <h1 >Example Text</h1>
-     <p className='w-96 italic font-light'>and to be honest, um, im not sure I can be doing this for much longer. um, I mean, its been over 20 years and uh, you know, my body is aging.</p>
+     <p className='max-w-96 italic font-light'>and to be honest, um, im not sure I can be doing this for much longer. um, I mean, its been over 20 years and uh, you know, my body is aging.</p>
     </div>
     <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
      <h1 className='font-semibold text-lg mb-10 pb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
