@@ -68,7 +68,7 @@ export const AVATARS = [
   },
   {
     title: 'Leebron',
-    videoUrl: 'https://upcdn.io/12a1yvy/raw/lebron%20talking.mp4',
+    videoUrl: 'https://upcdn.io/12a1yvy/raw/lebron%20talk%202-4hrb.mp4',
     customThumbnail: 'https://upcdn.io/12a1yvy/image/lebron.webp?w=300&h=200&f=webp&fit=crop',
     createdBy: 'cd team'
   },
