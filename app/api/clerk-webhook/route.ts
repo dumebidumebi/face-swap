@@ -10,7 +10,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 
 export async function POST(req: NextRequest) {
 
-  const starterCredits = 120
+  const starterCredits = 3
   const data =  await req.json()
   const userId = await data?.data.id
   console.log("clerk webhook user", userId)
