@@ -1,0 +1,78 @@
+
+import { NextRequest } from "next/server"
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import Replicate from 'replicate';
+import * as Bytescale from "@bytescale/sdk";
+import { uploadFromUrl } from "@/lib/uploadFromUrl";
+import { clerkClient } from "@clerk/nextjs/server";
+
+export async function POST(req: NextRequest) {
+  const replicate = new Replicate();
+  const body = await req.json()
+  const avatar = body.targetVid
+  const outputUrl = body.sourceAudio
+  const fileApi = new Bytescale.FileApi({
+    apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC"
+  });
+
+
+    console.log("https://upcdn.io/12a1yvy/audio" + outputUrl.slice(28) + "?f=wav-rf64")
+    // process api
+    const wavInput = async () => await fileApi.processFile({
+      accountId: "12a1yvy",
+      "filePath": outputUrl?.slice(28),
+      "transformation": "audio",
+      "transformationParams": [
+        {
+          'f': 'wav-rf64'
+        }
+      ]
+    })
+    .then(
+      result => result.json(),
+      error => console.error(error)
+    );
+    const wav = await wavInput()
+
+    // job api
+    const jobApi = new Bytescale.JobApi({
+      apiKey: 'secret_12a1yvy9LWv31G6KXg8kRa1wpFnj',
+    });
+    let returnObj = wav
+    while(returnObj?.status !== "Succeeded" && returnObj?.status !== "failed"){
+    const jobStatus = async () => await jobApi.getJob({
+        accountId: "12a1yvy",
+        "jobId": wav.jobId,
+        "jobType": wav.jobType
+      })
+      .then(
+        result => result,
+        error => console.error(error)
+      );
+      const job = await jobStatus()
+      returnObj = job
+    }
+    
+    // create retalk
+    if(returnObj?.status == 'Succeeded'){
+    console.log('wav input:', returnObj)
+    const input = {
+      face: avatar,
+      input_audio: returnObj?.summary?.result?.artifactUrl
+    }
+    const videoRetalkPrediction = await replicate.predictions.create({
+      version: "db5a650c807b007dc5f9e5abe27c53e1b62880d1f94d218d27ce7fa802711d67",
+      input: input
+    });
+    if(videoRetalkPrediction?.error){
+      return new Response(JSON.stringify(videoRetalkPrediction))
+    }
+
+    return new Response(JSON.stringify(videoRetalkPrediction))
+  }
+
+  }
+
+ 
+  

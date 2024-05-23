@@ -19,7 +19,9 @@ export async function POST(req: NextRequest) {
   const lipSyncApiPrice = 0.000725
   const ttsApiPrice = 0.000225
   const prediction = await replicate.predictions.get(predictionId)
-
+  const fileApi = new Bytescale.FileApi({
+    apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC"
+  });
 
   let returnPrediction: object
   returnPrediction = prediction
@@ -64,8 +66,6 @@ export async function POST(req: NextRequest) {
       })}
     }else{return new Response("Database Error, Document does not exist", {status:400})}
 
-
-    return new Response(JSON.stringify({...returnPrediction, output: outputUrl?.fileUrl}))
 
     // run Video Retalk if prediction version isnt video retalk - basically it hasnt run yet
 
