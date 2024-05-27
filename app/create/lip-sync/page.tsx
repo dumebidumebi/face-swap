@@ -38,10 +38,10 @@ async function cancelPrediction(predict: string) {
   return cancel
 }
 
-async function RunLipSync(userId: string, avatar:string, text:string) {
+async function RunLipSync(userId: string, avatar:string, audio:string) {
   const refreshedCompany = await fetch("/api/lip-sync", {
     method: "POST",
-    body: JSON.stringify({userId: userId, targetVid: avatar, sourcetext: text}),
+    body: JSON.stringify({userId: userId, targetVid: avatar, audio: audio}),
   }).then((res) => res.json());
   return refreshedCompany
 }
@@ -50,6 +50,14 @@ async function RunRetalk(userId: string, avatar:string, outputUrl:string) {
   const refreshedCompany = await fetch("/api/retalk", {
     method: "POST",
     body: JSON.stringify({userId: userId, targetVid: avatar, sourceAudio: outputUrl}),
+  }).then((res) => res.json());
+  return refreshedCompany
+}
+
+async function RunTest(userId: string, avatar:string, text:string) {
+  const refreshedCompany = await fetch("/api/elevenlabs-tts", {
+    method: "POST",
+    body: JSON.stringify({userId: userId, targetVid: avatar, sourceText: text}),
   }).then((res) => res.json());
   return refreshedCompany
 }
@@ -78,7 +86,17 @@ function Page() {
     cancelPrediction(prediction?.id)
   }
 
+  const preventRefresh = (e) => {
+    return alert("data will get lost")
+};
 
+useEffect(() => {
+    window.addEventListener('beforeunload', preventRefresh);
+
+    return () => {
+        window.removeEventListener('beforeunload', preventRefresh);
+    }
+}, [])
 
   async function uploadFile(){
     if (predictionAvatar == null) return;
@@ -87,35 +105,16 @@ function Page() {
       setError(null)
       setPrediction(null)
       }
+    setError(null)
+    setPrediction(null)
     setLoading(true)
-    const predict = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
-    setPrediction(predict)
-    if (prediction?.error) {
-      setError(prediction.error);
-      return;
-    }
+    const audio = await RunTest(user.id, predictionAvatar.videoUrl, text)
+    console.log(audio)
 
-    while (
-      prediction?.status !== "succeeded" &&
-      prediction?.status !== "failed"
-    ) {
-      await sleep(1000);
-      const response = await fetch("/api/lip-sync-predictions",{
-        method: "POST",
-        body: JSON.stringify({predictionId: prediction? prediction?.id : predict?.id, userId:user?.id, avatar: (customAvatar? customAvatar: predictionAvatar?.videoUrl)}),
-      }).then((res) => res.json());
-
-      let getPredict = await response
-      setPrediction(getPredict);
-      if (getPredict?.error) {
-        setError(getPredict?.error);
-        setLoading(false)
-        break
-      }
-      if(getPredict?.status === "succeeded"){
-        // setLoading(false)
-        
-          const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , getPredict?.output)
+    if(!audio) return
+    const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio )
+    if(!lsAudio) return 
+          const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , lsAudio)
           setPrediction(predict)
           if (prediction?.error) {
             setError(prediction.error);
@@ -142,9 +141,9 @@ function Page() {
               setLoading(false)
               break
             }}
-              break
+              
       }  
-    }}
+    
   
     function handleClick(obj: PredictionAvatar){
       setAvatar(obj)
@@ -153,6 +152,18 @@ function Page() {
     const handleChange = (event) => {
       setText(event.target.value);
     };
+
+    async function tester(){
+      RunTest(user.id, predictionAvatar.videoUrl, text)
+      const audio = await RunTest(user.id, predictionAvatar.videoUrl, text)
+      console.log(audio)
+    }
+
+    const handleTest = (event) => {
+      setText(event.target.value);
+      tester()
+    };
+
 
   return (
     <>
@@ -195,6 +206,7 @@ function Page() {
      <SignedIn>
       {user?.publicMetadata?.credits ? <Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>  : (<Button size='sm' className='w-fit rounded-sm'><Link href={"/pricing-page"}>Buy Credits</Link></Button>)} 
       {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
+      
      </SignedIn>
      <SignedOut>
       <Link href={"/clerk/sign-in"}>
@@ -208,7 +220,7 @@ function Page() {
      <h1 className='font-semibold text-lg mb-5 mt-5 sm:mt-0'>Output</h1>
     {loading &&(
       <div className='min-w-350  min-h  rounded'>
-        <MyLoader/> 
+        <MyLoader/> Running prediction...
       </div>)
       }
      {error && <div className='text-[#ff0000] font-extralight'>Error:{error}</div>}
