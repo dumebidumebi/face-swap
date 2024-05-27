@@ -50,7 +50,18 @@ function Page() {
   const [error, setError] = useState(null);
   const [prediction, setPrediction] = useState(null);
 
-  
+  const preventRefresh = (e) => {
+    return alert("data will get lost")
+};
+
+useEffect(() => {
+    window.addEventListener('beforeunload', preventRefresh);
+
+    return () => {
+        window.removeEventListener('beforeunload', preventRefresh);
+    }
+}, [])
+
   async function cancel(){
     cancelPrediction(prediction?.id)
   }
@@ -61,6 +72,8 @@ function Page() {
       setError(null)
       setPrediction(null)
       }
+    setError(null)
+    setPrediction(null)
     setLoading(true)
     const predict = await RunDeepFake(user?.id, targetVid, sourceVid)
     setPrediction(predict)
