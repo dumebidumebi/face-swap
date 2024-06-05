@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json()
   console.log('body', body)
     const userId = body.userId
+    const pitch = body.pitch
     const targetVid = body.targetVid
     const sourceAudio = body.audio
     const create_rvc_dataset = await replicate.run(
@@ -52,12 +53,12 @@ export async function POST(req: NextRequest) {
           pitch_change: "no-change",
           rms_mix_rate: 0.25,
           filter_radius: 7,
-          output_format: "mp3",
+          output_format: "wav",
           reverb_damping: 0.7,
           reverb_dryness: 0.8,
           reverb_wetness: 0.2,
-          crepe_hop_length: 32,
-          pitch_change_all: 0,
+          crepe_hop_length: 64,
+          pitch_change_all: pitch? pitch : 0,
           main_vocals_volume_change: 10,
           pitch_detection_algorithm: "mangio-crepe",
           instrumental_volume_change: 0,
