@@ -14,16 +14,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-dropdown-menu';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+import { Slider } from "@/components/ui/slider"
 import { CarouselComponent } from '@/components/AvatarCarousel';
 import { Badge } from '@/components/ui/badge';
 import { PredictionAvatar, useAvatarStore } from '@/app/avatars/page';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 // Default values shown
 
@@ -38,10 +34,10 @@ async function cancelPrediction(predict: string) {
   return cancel
 }
 
-async function RunLipSync(userId: string, avatar:string, audio:string) {
+async function RunLipSync(userId: string, avatar:string, audio:string, pitch:number) {
   const refreshedCompany = await fetch("/api/lip-sync", {
     method: "POST",
-    body: JSON.stringify({userId: userId, targetVid: avatar, audio: audio}),
+    body: JSON.stringify({userId: userId, targetVid: avatar, audio: audio, pitch: pitch}),
   }).then((res) => res.json());
   return refreshedCompany
 }
@@ -54,10 +50,10 @@ async function RunRetalk(userId: string, avatar:string, outputUrl:string) {
   return refreshedCompany
 }
 
-async function RunTest(userId: string, avatar:string, text:string) {
+async function RunTts(userId: string, text:string, gender: string) {
   const refreshedCompany = await fetch("/api/elevenlabs-tts", {
     method: "POST",
-    body: JSON.stringify({userId: userId, targetVid: avatar, sourceText: text}),
+    body: JSON.stringify({userId: userId, sourceText: text, gender: gender}),
   }).then((res) => res.json());
   return refreshedCompany
 }
@@ -79,6 +75,10 @@ function Page() {
   const predictionAvatar = useAvatarStore((state) => state.predictionAvatar)
   const [text, setText] = useState('');
   const [customAvatar, setCustomAvatar] = useState(null);
+  const [pitch, setPitch] = useState(0);
+  const [gender, setGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState(null);
+
 
 
 
@@ -108,11 +108,11 @@ useEffect(() => {
     setError(null)
     setPrediction(null)
     setLoading(true)
-    const audio = await RunTest(user.id, predictionAvatar.videoUrl, text)
+    const audio = await RunTts(user.id, text, selectedGender? selectedGender: predictionAvatar.gender)
     console.log(audio)
 
     if(!audio) return
-    const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio )
+    const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
     if(!lsAudio) return 
           const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , lsAudio)
           setPrediction(predict)
@@ -153,16 +153,19 @@ useEffect(() => {
       setText(event.target.value);
     };
 
-    async function tester(){
-      RunTest(user.id, predictionAvatar.videoUrl, text)
-      const audio = await RunTest(user.id, predictionAvatar.videoUrl, text)
-      console.log(audio)
-    }
-
-    const handleTest = (event) => {
-      setText(event.target.value);
-      tester()
+    const handlePitch = (event) => {
+      setPitch(event.target.value);
+      console.log(pitch)
     };
+
+    const handleGenderChange = (event) => {
+      setSelectedGender(event.target.value);
+    };
+
+    // const handleTest = (event) => {
+    //   setText([event.target.value]);
+    //   tester()
+    // };
 
 
   return (
@@ -178,11 +181,11 @@ useEffect(() => {
      <div><h1 className='mt-5 font-medium'>Selected Avatar:  {predictionAvatar?.title ? predictionAvatar?.title: ''}</h1></div>
      <CarouselComponent onClick={handleClick} />
      <Link className='flex mt-2 flex-row gap-2' href={"/avatars"}><p className=" underline ">Browse trending avatars</p><span><Badge>new</Badge></span></Link>
-      <Accordion type="single" collapsible className='w-fit mt-0 mb-5'>
+      <Accordion type="single" collapsible className='w-fit mt-0 mb-5 '>
           <AccordionItem value="item-1">
             <AccordionTrigger>Create Custom Avatar</AccordionTrigger>
-            <AccordionContent className='overflow-y-scroll h-20'>
-            <p className='font-light'>Upload Video of Person talking</p>
+            <AccordionContent className='overflow-y-scroll bg-white/75 p-5'>
+            <p className='font-medium mb-2'>Upload Video of Person talking</p>
             <UploadButton options={options}
                           onComplete={files => {setCustomAvatar(files.map(x => x.fileUrl).join("\n"));setTargetInputText(files.map(x => x.originalFile.originalFileName).join("\n"))}}>
               {({onClick}) =>
@@ -198,10 +201,40 @@ useEffect(() => {
                   </>
               }
             </UploadButton>
+            <div className='flex gap-2 flex-col'>
+              <h3 className='font-medium'>Select voice gender:</h3>
+              <label>
+                <input
+                  type="radio"
+                  value="male"
+                  checked={selectedGender === 'male'}
+                  onChange={handleGenderChange}
+                />
+                Male
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="female"
+                  checked={selectedGender === 'female'}
+                  onChange={handleGenderChange}
+                />
+                Female
+              </label>
+              <p>Selected Gender: {selectedGender}</p>
+            </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-  
+        <p className='font-medium'>Change pitch/key of vocals</p>
+        <Input
+        type="number"
+        value={pitch}
+        className='bg-white mb-5'
+        onChange={e => {
+          //bug
+          setPitch(Number(e.target.value));
+        }}></Input>
   <div className='flex flex-row gap-5'>
      <SignedIn>
       {user?.publicMetadata?.credits ? <Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>  : (<Button size='sm' className='w-fit rounded-sm'><Link href={"/pricing-page"}>Buy Credits</Link></Button>)} 

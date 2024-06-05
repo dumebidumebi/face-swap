@@ -9,15 +9,17 @@ import { State, create } from 'zustand'
 export type PredictionAvatar = {
   title: string,
   videoUrl: string,
-  customThumbnail: string,
+  customThumbnail?: string,
   createdBy: string,
+  gender: string
 } 
 type Store = {
   predictionAvatar: {
     title: string,
     videoUrl: string,
-    customThumbnail: string,
+    customThumbnail?: string,
     createdBy: string,
+    gender:string
   } 
   setAvatar: (newstring: PredictionAvatar)=> void
 }
@@ -27,7 +29,8 @@ export const useAvatarStore = create<Store>()((set) => ({
     title: '',
     videoUrl: '',
     customThumbnail: '',
-    createdBy: ''
+    createdBy: '',
+    gender: ''
   },
   setAvatar: (newobj) => set(() => ({ predictionAvatar: newobj })),
 }))

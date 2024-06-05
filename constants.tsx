@@ -64,18 +64,21 @@ export const AVATARS = [
     title: 'MKBeeHD',
     videoUrl: 'https://upcdn.io/12a1yvy/raw/uploads/2024/05/mkbhd-usable.mp4',
     customThumbnail: 'https://upcdn.io/12a1yvy/raw/Screenshot%202024-05-22%20at%2023.20.36.png?w=300&h=3=200&f=webp&fit=crop',
-    createdBy: 'cd team'
+    createdBy: 'cd team',
+    gender: 'male'
   },
   {
     title: 'Leebron',
     videoUrl: 'https://upcdn.io/12a1yvy/raw/lebron%20talk%202-4hrb.mp4',
     customThumbnail: 'https://upcdn.io/12a1yvy/image/lebron.webp?w=300&h=200&f=webp&fit=crop',
-    createdBy: 'cd team'
+    createdBy: 'cd team',
+    gender: 'male'
   },
   {
     title: 'Mark Goldbridge',
     videoUrl: 'https://upcdn.io/12a1yvy/raw/goldbridge%20talking.mp4',
     customThumbnail: 'https://upcdn.io/12a1yvy/raw/Screenshot%202024-05-22%20at%2023.17.41.png?w=300&h=200&f=webp&fit=crop',
-    createdBy: 'cd team'
+    createdBy: 'cd team',
+    gender: 'male'
   },
 ];

@@ -21,10 +21,10 @@ export function CarouselComponent(props) {
       <CarouselNext className="mr-0"/>
       <CarouselContent>
         {AVATARS.map((item) => (
-          <CarouselItem onClick={() => props.onClick(item)} className="basis-1/3 hover:opacity-70 " key={item.title}>
-            <div className={item.videoUrl == predictionAvatar?.videoUrl ? 'p-0 ':'p-2 '}>
+          <CarouselItem onClick={() => props.onClick(item)} className="basis-1/2 hover:opacity-70 " key={item.title}>
+            <div className={item.videoUrl == predictionAvatar?.videoUrl ? 'p-0':'p-2 '}>
               <Card className={"bg-white bg-opacity-90  rounded-lg backdrop-filter backdrop-blur-lg"}>
-                <CardContent className="flex aspect-square items-center justify-center p-0">
+                <CardContent className={item.videoUrl == predictionAvatar?.videoUrl ? 'ring-1 rounded-lg flex aspect-square items-center justify-center p-0':"flex aspect-square items-center justify-center p-0"}>
                 <React.Suspense>
                 <Image alt='thumbnails' className='' width={200} height={200} src={item.customThumbnail} />
                 </React.Suspense>

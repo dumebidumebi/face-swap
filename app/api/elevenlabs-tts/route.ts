@@ -15,8 +15,9 @@ export async function POST(req: NextRequest) {
   const body = await req.json()
   console.log('body', body)
   const userId = body.userId
-  const targetVid = body.targetVid
   const sourceText = body.sourceText
+  const gender = body.gender
+
 dotenv.config();
 
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
@@ -31,7 +32,7 @@ const client = new ElevenLabsClient({
 
 const createAudioStreamFromText = async (text: string): Promise<Buffer> => {
   const audioStream = await client.generate({
-    voice: "Brian",
+    voice: (gender == "male")? "Brian" : "Rachel",
     model_id: "eleven_turbo_v2",
     text,
   });
