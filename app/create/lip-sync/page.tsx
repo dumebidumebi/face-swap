@@ -58,6 +58,27 @@ async function RunTts(userId: string, text:string, gender: string) {
   return refreshedCompany
 }
 
+
+async function RunTest(eventfile) {
+  // const refreshedCompany = await fetch("/api/elevenlabs-add-voice", {
+  //   method: "POST",
+  //   // body: JSON.stringify({userId: userId, sourceText: text, gender: gender}),
+  // }).then((res) => res.json());
+
+  const form = new FormData();
+  form.append("files", eventfile);
+  form.append("name", "tatum");
+  form.append("description", "athletic man , deep voice");
+
+  const options = {method: 'POST', headers: {'xi-api-key': 'd926eab35c7e400f832609912e2920b0'}, body: form};
+
+  const data = fetch('https://api.elevenlabs.io/v1/voices/add', options)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+    
+  // return refreshedCompany
+}
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function Page() {
@@ -155,17 +176,16 @@ useEffect(() => {
 
     const handlePitch = (event) => {
       setPitch(event.target.value);
-      console.log(pitch)
+      // console.log(pitch)
     };
 
     const handleGenderChange = (event) => {
       setSelectedGender(event.target.value);
     };
 
-    // const handleTest = (event) => {
-    //   setText([event.target.value]);
-    //   tester()
-    // };
+    const handleTest = () => {
+      // RunTest(e.ta)
+    };
 
 
   return (
@@ -239,7 +259,12 @@ useEffect(() => {
      <SignedIn>
       {user?.publicMetadata?.credits ? <Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>  : (<Button size='sm' className='w-fit rounded-sm'><Link href={"/pricing-page"}>Buy Credits</Link></Button>)} 
       {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
-      
+      <Input type="file" onChange={e => {
+          //bug
+          RunTest((e.target.files[0]));
+        }} ></Input>
+      {/* <Button size='sm' className='w-20 rounded-sm' onClick={handleTest}> Test </Button> */}
+
      </SignedIn>
      <SignedOut>
       <Link href={"/clerk/sign-in"}>

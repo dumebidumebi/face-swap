@@ -48,6 +48,7 @@ const createAudioStreamFromText = async (text: string): Promise<Buffer> => {
 
 const stream = await createAudioStreamFromText(sourceText);
 
+// upload to bytescale
 const path = await uploadManager.upload({
   data: stream,
   // Required if 'data' is a stream, buffer, or string.
