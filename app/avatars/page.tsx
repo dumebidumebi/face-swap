@@ -20,8 +20,12 @@ type Store = {
     customThumbnail?: string,
     createdBy: string,
     gender:string
-  } 
-  setAvatar: (newstring: PredictionAvatar)=> void
+  } , 
+  text: string, 
+  customAvatar:string,
+  setAvatar: (newstring: PredictionAvatar)=> void,
+  setText: (newstring: string)=> void,
+  setCustomAvatar: (newstring:string)=>void
 }
 
 export const useAvatarStore = create<Store>()((set) => ({
@@ -32,7 +36,11 @@ export const useAvatarStore = create<Store>()((set) => ({
     createdBy: '',
     gender: ''
   },
+  text : '',
+  customAvatar: '',
   setAvatar: (newobj) => set(() => ({ predictionAvatar: newobj })),
+  setText: (newtext) => set(() => ({ text: newtext })),
+  setCustomAvatar: (newstring) => set(() => ({customAvatar: newstring}))
 }))
 
 
