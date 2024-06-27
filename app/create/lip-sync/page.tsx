@@ -186,7 +186,7 @@ useEffect(() => {
     }
     const handleChange = (event) => {
       setText(event.target.value);
-      console.log(text)
+    
     };
     
     const handleNameChange = (event) => {
