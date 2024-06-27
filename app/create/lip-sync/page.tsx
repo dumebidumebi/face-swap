@@ -107,39 +107,9 @@ function Page() {
   const setText = useAvatarStore((state) => state.setText)
   const customAvatar = useAvatarStore((state) => state.customAvatar)
   const setCustomAvatar = useAvatarStore((state) => state.setCustomAvatar)
-  // const [customAvatar, setCustomAvatar] = useState(null);
-  const [pitch, setPitch] = useState(0);
-  const [gender, setGender] = useState('');
-  const [selectedGender, setSelectedGender] = useState(null);
-  const [voice, setVoice] = useState(null);
   const [voiceName, setVoiceName] = useState('')
   const [description, setDescription] = useState('')
-  // const [voiceId, setVoiceId] = useState(null);
-  const [sourceVid, setSourceVid] = useState(null)
-  const [sourceInputText, setSourceInputText] = useState('')
 
-
-
-  // async function bytescaleUpload(file) {
-  //   const path = await uploadManager.upload({
-  //     data: file,
-  //     // Required if 'data' is a stream, buffer, or string.
-  //     mime: file.type,
-  //     // Required if 'data' is a stream, buffer, or string.
-  //     originalFileName: file.name,
-  //     // Required if 'data' is a stream.
-  //     // size: 5098, // e.g. fs.statSync("file.txt").size
-  //   })
-  //   .then(
-  //     ({ fileUrl, filePath }) => {
-  //       return fileUrl
-  //     },
-  //     error => console.error(`Error: ${error.message}`, error)
-  //   );
-  //   setCustomAvatar(path);
-  //   console.log(customAvatar)
-  //   return path
-  // }
 
   async function cancel(){
     cancelPrediction(prediction?.id)
@@ -225,21 +195,6 @@ useEffect(() => {
 
     const handleDescriptionChange = (event) => {
       setDescription(event.target.value);
-    };
-
-    const handlePitch = (event) => {
-      setPitch(event.target.value);
-      // console.log(pitch)
-    };
-
-    const handleGenderChange = (event) => {
-      setSelectedGender(event.target.value);
-    };
-
-    const runAddVoice = (voiceName:string, description:string) => {
-      const id = AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
-      // setVoiceId(id?.voice_id)
-      console.log(id)
     };
 
 

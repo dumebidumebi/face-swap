@@ -15,6 +15,8 @@ export async function POST(req: NextRequest) {
 const body = await req.json()
 const sourceText = body.sourceText
 const sourceVid = body.voiceFile
+const voiceName = body.voiceName
+const description = body.description
 const fileApi = new Bytescale.FileApi({
   fetchApi: nodeFetch as any,
   apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC"
@@ -64,8 +66,8 @@ const jobApi = new Bytescale.JobApi({
   // add voice to elevenlabs
   const form = new FormData();
   form.append("files", mp3Blob, "voice.mp3");
-  form.append("name", "tatum");
-  form.append("description", "athletic man , deep voice");
+  form.append("name", voiceName);
+  form.append("description", description);
 
   const options = {method: 'POST', headers: {'xi-api-key': 'd926eab35c7e400f832609912e2920b0'}, body: form};
 
@@ -139,13 +141,14 @@ const path = await uploadManager.upload({
 console.log('path', path)
 console.log( 'stream type',  stream.type)
 
-const optionsdel = {method: 'DELETE'};
+const optionsdel = {method: 'DELETE', headers: {'xi-api-key': ELEVENLABS_API_KEY}};
 const url2 = 'https://api.elevenlabs.io/v1/voices/' + voiceId?.voice_id
 
-await fetch(url2, optionsdel)
+const deleted = await fetch(url2, optionsdel)
   .then(response => response.json())
   .then(response => console.log(response))
   .catch(err => console.error(err));
 
+console.log(deleted)
 return new Response(JSON.stringify(path))
 }
