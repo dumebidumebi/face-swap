@@ -4,7 +4,7 @@ import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import React, { Suspense, useEffect, useState } from 'react'
 import Link from 'next/link';
 import PricingPage from '@/app/pricing-page/page';
-import { UploadButton } from "@bytescale/upload-widget-react"
+import { UploadButton, UploadDropzone } from "@bytescale/upload-widget-react"
 import { Upload } from 'lucide-react';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
@@ -20,6 +20,19 @@ import { Badge } from '@/components/ui/badge';
 import { PredictionAvatar, useAvatarStore } from '@/app/avatars/page';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import * as Bytescale from "@bytescale/sdk";
+import nodeFetch from "node-fetch";
+
 
 // Default values shown
 
@@ -50,34 +63,30 @@ async function RunRetalk(userId: string, avatar:string, outputUrl:string) {
   return refreshedCompany
 }
 
-async function RunTts(userId: string, text:string, gender: string) {
+async function RunTts(userId: string, text:string, voiceId: string) {
   const refreshedCompany = await fetch("/api/elevenlabs-tts", {
     method: "POST",
-    body: JSON.stringify({userId: userId, sourceText: text, gender: gender}),
+    body: JSON.stringify({userId: userId, sourceText: text, voiceId: voiceId}),
   }).then((res) => res.json());
   return refreshedCompany
 }
 
+const uploadManager = new Bytescale.UploadManager({
+  fetchApi: nodeFetch as any, // import nodeFetch from "node-fetch"; // Only required for Node.js. TypeScript: 'nodeFetch as any' may be necessary.
+  apiKey: 'secret_12a1yvy9LWv31G6KXg8kRa1wpFnj', // Get API key: https://www.bytescale.com/get-started
+});
 
-async function RunTest(eventfile) {
-  // const refreshedCompany = await fetch("/api/elevenlabs-add-voice", {
-  //   method: "POST",
-  //   // body: JSON.stringify({userId: userId, sourceText: text, gender: gender}),
-  // }).then((res) => res.json());
 
-  const form = new FormData();
-  form.append("files", eventfile);
-  form.append("name", "tatum");
-  form.append("description", "athletic man , deep voice");
 
-  const options = {method: 'POST', headers: {'xi-api-key': 'd926eab35c7e400f832609912e2920b0'}, body: form};
 
-  const data = fetch('https://api.elevenlabs.io/v1/voices/add', options)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
-    
-  // return refreshedCompany
+async function AddVoice(voiceName:string, description:string, voiceFile, text:string) {
+  const refreshedCompany = await fetch("/api/elevenlabs-add-voice", {
+    method: "POST",
+    body: JSON.stringify({voiceName: voiceName, description: description, voiceFile: voiceFile, sourceText:text}),
+  }).then((res) => res.json());
+console.log(refreshedCompany)
+
+  return refreshedCompany
 }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -94,14 +103,43 @@ function Page() {
   const [prediction, setPrediction] = useState(null);
   const setAvatar = useAvatarStore((state) => state.setAvatar)
   const predictionAvatar = useAvatarStore((state) => state.predictionAvatar)
-  const [text, setText] = useState('');
-  const [customAvatar, setCustomAvatar] = useState(null);
+  const text = useAvatarStore((state) => state.text)
+  const setText = useAvatarStore((state) => state.setText)
+  const customAvatar = useAvatarStore((state) => state.customAvatar)
+  const setCustomAvatar = useAvatarStore((state) => state.setCustomAvatar)
+  // const [customAvatar, setCustomAvatar] = useState(null);
   const [pitch, setPitch] = useState(0);
   const [gender, setGender] = useState('');
   const [selectedGender, setSelectedGender] = useState(null);
+  const [voice, setVoice] = useState(null);
+  const [voiceName, setVoiceName] = useState('')
+  const [description, setDescription] = useState('')
+  // const [voiceId, setVoiceId] = useState(null);
+  const [sourceVid, setSourceVid] = useState(null)
+  const [sourceInputText, setSourceInputText] = useState('')
 
 
 
+  // async function bytescaleUpload(file) {
+  //   const path = await uploadManager.upload({
+  //     data: file,
+  //     // Required if 'data' is a stream, buffer, or string.
+  //     mime: file.type,
+  //     // Required if 'data' is a stream, buffer, or string.
+  //     originalFileName: file.name,
+  //     // Required if 'data' is a stream.
+  //     // size: 5098, // e.g. fs.statSync("file.txt").size
+  //   })
+  //   .then(
+  //     ({ fileUrl, filePath }) => {
+  //       return fileUrl
+  //     },
+  //     error => console.error(`Error: ${error.message}`, error)
+  //   );
+  //   setCustomAvatar(path);
+  //   console.log(customAvatar)
+  //   return path
+  // }
 
   async function cancel(){
     cancelPrediction(prediction?.id)
@@ -120,8 +158,9 @@ useEffect(() => {
 }, [])
 
   async function uploadFile(){
-    if (predictionAvatar == null) return;
-    if (text == null) return
+    if ((predictionAvatar == null) && (customAvatar == null)) return;
+    if (text == null) return alert('remember to input text')
+    // if (voiceId == null) return
     if(error){
       setError(null)
       setPrediction(null)
@@ -129,13 +168,17 @@ useEffect(() => {
     setError(null)
     setPrediction(null)
     setLoading(true)
-    const audio = await RunTts(user.id, text, selectedGender? selectedGender: predictionAvatar.gender)
+    // create voice
+    // run tts
+    // delete created voice, but dont delete premade
+    // const audio = await RunTts(user.id, text, voiceId)
+    const audio = await AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
     console.log(audio)
 
-    if(!audio) return
-    const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
-    if(!lsAudio) return 
-          const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , lsAudio)
+    // if(!audio) return
+    // const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
+    if(!audio) return 
+          const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , audio)
           setPrediction(predict)
           if (prediction?.error) {
             setError(prediction.error);
@@ -162,7 +205,8 @@ useEffect(() => {
               setLoading(false)
               break
             }}
-              
+      
+          
       }  
     
   
@@ -172,6 +216,15 @@ useEffect(() => {
     }
     const handleChange = (event) => {
       setText(event.target.value);
+      console.log(text)
+    };
+    
+    const handleNameChange = (event) => {
+      setVoiceName(event.target.value);
+    };
+
+    const handleDescriptionChange = (event) => {
+      setDescription(event.target.value);
     };
 
     const handlePitch = (event) => {
@@ -183,8 +236,10 @@ useEffect(() => {
       setSelectedGender(event.target.value);
     };
 
-    const handleTest = () => {
-      // RunTest(e.ta)
+    const runAddVoice = (voiceName:string, description:string) => {
+      const id = AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
+      // setVoiceId(id?.voice_id)
+      console.log(id)
     };
 
 
@@ -198,21 +253,32 @@ useEffect(() => {
       <Textarea className='bg-white outline-none max-w-80 md:max-w-96' placeholder="what do you want them to say..." id="message" 
         value={text}
         onChange={handleChange} />
-     <div><h1 className='mt-5 font-medium'>Selected Avatar:  {predictionAvatar?.title ? predictionAvatar?.title: ''}</h1></div>
+     <div><h1 className='mt-5 font-medium'>Selected Avatar:  {voiceName? voiceName : (predictionAvatar?.title ? predictionAvatar?.title: '')}</h1></div>
      <CarouselComponent onClick={handleClick} />
      <Link className='flex mt-2 flex-row gap-2' href={"/avatars"}><p className=" underline ">Browse trending avatars</p><span><Badge>new</Badge></span></Link>
-      <Accordion type="single" collapsible className='w-fit mt-0 mb-5 '>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Create Custom Avatar</AccordionTrigger>
-            <AccordionContent className='overflow-y-scroll bg-white/75 p-5'>
-            <p className='font-medium mb-2'>Upload Video of Person talking</p>
-            <UploadButton options={options}
+
+      <Accordion type="single" collapsible className='w-fit '>
+      <AccordionItem value="item-1">
+        <AccordionTrigger><Button className='w-fit rounded-sm'>Create Custom Avatar</Button></AccordionTrigger>
+        <AccordionContent className='bg-slate-200 overflow-y-scroll h-full'>
+        
+        <div className='mx-5 '>
+          <Label className='font-medium mt-5'>Name</Label>
+          <Input className='bg-white outline-none mb-5 ' 
+            value={voiceName}
+            onChange={handleNameChange} />
+          {/* <Input type="file" className='bg-zinc-300 mb-5' onChange={e => {
+             bytescaleUpload((e.target.files[0]))
+        }} ></Input> */}
+        <Label className='font-medium'>Source File</Label>
+        <Label className='font-extralight'>Upload a video of someone talking for 1 minute</Label>
+        <UploadButton options={options}
                           onComplete={files => {setCustomAvatar(files.map(x => x.fileUrl).join("\n"));setTargetInputText(files.map(x => x.originalFile.originalFileName).join("\n"))}}>
               {({onClick}) =>
                 <>
                 <div onClick={onClick} className='max-w-full border-2 mb-5 rounded-sm flex justify-left text-center content-center'>
-                  <Button variant='ghost' size='sm' className='w-fit rounded-sm' >
-                  <Upload />
+                  <Button variant='secondary' size='sm' className='w-fit rounded-sm' >
+                  <Upload /><span className='ml-5'>choose file...</span>
                   </Button>
                   <p className='text-center truncate pt-1.5'>
                   {targetInputText}
@@ -221,48 +287,21 @@ useEffect(() => {
                   </>
               }
             </UploadButton>
-            <div className='flex gap-2 flex-col'>
-              <h3 className='font-medium'>Select voice gender:</h3>
-              <label>
-                <input
-                  type="radio"
-                  value="male"
-                  checked={selectedGender === 'male'}
-                  onChange={handleGenderChange}
-                />
-                Male
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="female"
-                  checked={selectedGender === 'female'}
-                  onChange={handleGenderChange}
-                />
-                Female
-              </label>
-              <p>Selected Gender: {selectedGender}</p>
-            </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        <p className='font-medium'>Change pitch/key of vocals</p>
-        <Input
-        type="number"
-        value={pitch}
-        className='bg-white mb-5'
-        onChange={e => {
-          //bug
-          setPitch(Number(e.target.value));
-        }}></Input>
+          <Label className='font-medium'>Description</Label>
+          <Textarea className='bg-white outline-none mb-5 ' placeholder="how would you describe the voice" 
+            value={description}
+            onChange={handleDescriptionChange} />
+        </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+
+
   <div className='flex flex-row gap-5'>
      <SignedIn>
       {user?.publicMetadata?.credits ? <Button size='sm' className='w-20 rounded-sm' onClick={uploadFile}> Run </Button>  : (<Button size='sm' className='w-fit rounded-sm'><Link href={"/pricing-page"}>Buy Credits</Link></Button>)} 
       {prediction && <Button  variant='outline' size='sm' className='w-20 rounded-sm' onClick={cancel}>Cancel</Button>}
-      <Input type="file" onChange={e => {
-          //bug
-          RunTest((e.target.files[0]));
-        }} ></Input>
+     
       {/* <Button size='sm' className='w-20 rounded-sm' onClick={handleTest}> Test </Button> */}
 
      </SignedIn>
