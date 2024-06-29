@@ -20,6 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { PredictionAvatar, useAvatarStore } from '@/app/avatars/page';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
+import { useMutation } from "@tanstack/react-query";
 import {
   Drawer,
   DrawerClose,
@@ -109,7 +110,7 @@ function Page() {
   const setCustomAvatar = useAvatarStore((state) => state.setCustomAvatar)
   const [voiceName, setVoiceName] = useState('')
   const [description, setDescription] = useState('')
-
+  const addVoiceMutation = useMutation(AddVoice);
 
   async function cancel(){
     cancelPrediction(prediction?.id)
@@ -127,7 +128,7 @@ useEffect(() => {
     }
 }, [])
 
-  async function uploadFile(){
+  const uploadFile = async() => {
     if ((predictionAvatar == null) && (customAvatar == null)) return;
     if (text == null) return alert('remember to input text')
     // if (voiceId == null) return
@@ -142,18 +143,32 @@ useEffect(() => {
     // run tts
     // delete created voice, but dont delete premade
     // const audio = await RunTts(user.id, text, voiceId)
-    const audio = await AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
-    console.log(audio)
+    // const audio = await AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
+    // console.log(audio)
 
-    // if(!audio) return
-    // const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
-    if(!audio) return 
-          const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , audio)
-          setPrediction(predict)
-          if (prediction?.error) {
-            setError(prediction.error);
-            return;
-          }
+    // // if(!audio) return
+    // // const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
+    // if(!audio) return 
+    //       const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , audio)
+    //       setPrediction(predict)
+    //       if (prediction?.error) {
+    //         setError(prediction.error);
+    //         return;
+    //       }
+
+    try {
+      const audio = await addVoiceMutation.mutateAsync({ voiceName, description, voiceFile: customAvatar || predictionAvatar.videoUrl, text });
+      console.log(audio);
+
+      if (!audio) return;
+      const predict = await RunRetalk(user.id, customAvatar || predictionAvatar.videoUrl, audio);
+      setPrediction(predict);
+
+      if (predict.error) {
+        setError(predict.error);
+        setLoading(false);
+        return;
+      }
           while (
             prediction?.status !== "succeeded" &&
             prediction?.status !== "failed"
@@ -177,9 +192,13 @@ useEffect(() => {
             }}
       
           
-      }  
+      }catch (error) {
+      setError(error.message);
+    }
+    setLoading(false);
     
-  
+    };
+    
     function handleClick(obj: PredictionAvatar){
       setAvatar(obj)
       

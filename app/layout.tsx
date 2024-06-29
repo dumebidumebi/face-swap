@@ -9,6 +9,13 @@ import SideNav from "@/components/side-nav";
 import MarginWidthWrapper from "@/components/margin-width-wrapper";
 import PageWrapper from "@/components/page-wrapper";
 
+//tanStack Query
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
+
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,27 +31,32 @@ export default function RootLayout({
 }>) {
   
   return (
-    <ClerkProvider publishableKey={`${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}`}>
-    <html lang="en">
-    <head>
-    <script async src="https://cdn.tolt.io/tolt.js" data-tolt="47e79a35-f79e-4f86-a0d4-4599117dfd75"></script>
-    </head>
-      <body className={`bg-white ${inter.className}`}>
-        <div className="flex">
-          <main className="flex-1">
-            <HeaderWeb/>
-            <SideNav/>
-            <MarginWidthWrapper>
-            <PageWrapper>
-            
-            {children}
-           
-            </PageWrapper>
-            </MarginWidthWrapper>
-          </main>
-        </div>
-      </body>
-    </html>
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ClerkProvider
+        publishableKey={`${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}`}
+      >
+        <html lang="en">
+          <head>
+            <script
+              async
+              src="https://cdn.tolt.io/tolt.js"
+              data-tolt="47e79a35-f79e-4f86-a0d4-4599117dfd75"
+            ></script>
+          </head>
+          <body className={`bg-white ${inter.className}`}>
+            <div className="flex">
+              <main className="flex-1">
+                <HeaderWeb />
+                <SideNav />
+                <MarginWidthWrapper>
+                  <PageWrapper>{children}</PageWrapper>
+                </MarginWidthWrapper>
+              </main>
+            </div>
+          </body>
+        </html>
+      </ClerkProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
