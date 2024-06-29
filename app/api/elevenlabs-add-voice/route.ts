@@ -57,7 +57,7 @@ const jobApi = new Bytescale.JobApi({
     returnObj = job
   }
   
-  const fileUrl = mp3.summary.result.artifactUrl
+  const fileUrl = returnObj?.summary?.result?.artifactUrl
 
     // Fetch the actual file from the URL
     const fileResponse = await fetch(fileUrl);
