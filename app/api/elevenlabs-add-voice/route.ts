@@ -56,6 +56,7 @@ const jobApi = new Bytescale.JobApi({
     const job = await jobStatus()
     returnObj = job
   }
+
   
   const fileUrl = returnObj?.summary?.result?.artifactUrl
 
@@ -149,6 +150,6 @@ const deleted = await fetch(url2, optionsdel)
   .then(response => console.log(response))
   .catch(err => console.error(err));
 
-console.log(deleted)
+console.log(deleted, 'deleted')
 return new Response(JSON.stringify(path))
 }
