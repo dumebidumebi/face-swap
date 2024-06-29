@@ -186,7 +186,7 @@ useEffect(() => {
     }
     const handleChange = (event) => {
       setText(event.target.value);
-      console.log(text)
+    
     };
     
     const handleNameChange = (event) => {
@@ -272,7 +272,7 @@ useEffect(() => {
      <h1 className='font-semibold text-lg mb-5 mt-5 sm:mt-0'>Output</h1>
     {loading &&(
       <div className='min-w-350  min-h  rounded'>
-        <MyLoader/> Running prediction...
+        <MyLoader/> training avatar...
       </div>)
       }
      {error && <div className='text-[#ff0000] font-extralight'>Error:{error}</div>}
