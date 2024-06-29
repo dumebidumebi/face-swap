@@ -215,24 +215,24 @@ useEffect(() => {
       <Accordion type="single" collapsible className='w-fit '>
       <AccordionItem value="item-1">
         <AccordionTrigger><Button className='w-fit rounded-sm'>Create Custom Avatar</Button></AccordionTrigger>
-        <AccordionContent className='bg-slate-200 overflow-y-scroll h-full'>
+        <AccordionContent className='bg-slate-200 overflow-y-scroll h-full gap-2'>
         
         <div className='mx-5 '>
-          <Label className='font-medium mt-5'>Name</Label>
+          <Label className='font-medium mt-5 mb-2'>Name</Label>
           <Input className='bg-white outline-none mb-5 ' 
             value={voiceName}
             onChange={handleNameChange} />
           {/* <Input type="file" className='bg-zinc-300 mb-5' onChange={e => {
              bytescaleUpload((e.target.files[0]))
         }} ></Input> */}
-        <Label className='font-medium'>Source File</Label>
-        <Label className='font-extralight'>Upload a video of someone talking for 1 minute</Label>
+        <Label className='font-medium mb-2'>Source File</Label>
+        <Label className='font-extralight mb-2'>Upload a video of someone talking for 1 minute</Label>
         <UploadButton options={options}
                           onComplete={files => {setCustomAvatar(files.map(x => x.fileUrl).join("\n"));setTargetInputText(files.map(x => x.originalFile.originalFileName).join("\n"))}}>
               {({onClick}) =>
                 <>
                 <div onClick={onClick} className='max-w-full border-2 mb-5 rounded-sm flex justify-left text-center content-center'>
-                  <Button variant='secondary' size='sm' className='w-fit rounded-sm' >
+                  <Button variant='secondary' size='sm' className='w-full rounded-sm' >
                   <Upload /><span className='ml-5'>choose file...</span>
                   </Button>
                   <p className='text-center truncate pt-1.5'>
@@ -242,7 +242,7 @@ useEffect(() => {
                   </>
               }
             </UploadButton>
-          <Label className='font-medium'>Description</Label>
+          <Label className='font-medium mb-2'>Description</Label>
           <Textarea className='bg-white outline-none mb-5 ' placeholder="how would you describe the voice" 
             value={description}
             onChange={handleDescriptionChange} />
