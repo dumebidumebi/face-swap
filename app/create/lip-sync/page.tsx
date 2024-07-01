@@ -88,6 +88,7 @@ console.log(refreshedCompany)
 
   return refreshedCompany
 }
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function Page() {
