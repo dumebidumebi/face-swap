@@ -8,7 +8,7 @@ import Script from "next/script";
 import SideNav from "@/components/side-nav";
 import MarginWidthWrapper from "@/components/margin-width-wrapper";
 import PageWrapper from "@/components/page-wrapper";
-
+import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,6 +25,7 @@ export default function RootLayout({
   
   return (
     <ClerkProvider publishableKey={`${process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}`}>
+       <Analytics/>
     <html lang="en">
     <head>
     <script async src="https://cdn.tolt.io/tolt.js" data-tolt="47e79a35-f79e-4f86-a0d4-4599117dfd75"></script>
@@ -36,7 +37,7 @@ export default function RootLayout({
             <SideNav/>
             <MarginWidthWrapper>
             <PageWrapper>
-            
+           
             {children}
            
             </PageWrapper>
