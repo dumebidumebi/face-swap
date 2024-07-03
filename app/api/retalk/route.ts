@@ -61,8 +61,9 @@ export async function POST(req: NextRequest) {
       face: avatar,
       input_audio: returnObj?.summary?.result?.artifactUrl
     }
-    const videoRetalkPrediction = await replicate.predictions.create({
-      version: "db5a650c807b007dc5f9e5abe27c53e1b62880d1f94d218d27ce7fa802711d67",
+    const videoRetalkPrediction = await replicate.deployments.predictions.create(
+    "dumebidumebi",
+    "dumebi-video-retalk",{
       input: input
     });
     if(videoRetalkPrediction?.error){
