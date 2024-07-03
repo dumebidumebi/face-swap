@@ -3,7 +3,7 @@ export default function MyLoader() {
   return (
     <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     width={"50px"}
-  viewBox="0 0 100 100" enable-background="new 0 0 0 0" xmlSpace="preserve">
+  viewBox="0 0 100 100" enableBackground="new 0 0 0 0" xmlSpace="preserve">
   <circle fill="#000" stroke="none" cx="6" cy="50" r="6">
     <animate
       attributeName="opacity"

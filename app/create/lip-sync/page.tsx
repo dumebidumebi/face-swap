@@ -148,7 +148,9 @@ useEffect(() => {
 
     // if(!audio) return
     // const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
-    if(!audio) return 
+    if(typeof audio !== 'string'){
+      return setError('Upload Error try again')
+    } 
           const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , audio)
           setPrediction(predict)
           if (prediction?.error) {
