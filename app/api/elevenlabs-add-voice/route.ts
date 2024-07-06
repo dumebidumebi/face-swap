@@ -13,7 +13,8 @@ const uploadManager = new Bytescale.UploadManager({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { sourceText, voiceFile: sourceVid, voiceName, description } = body;
+    const { sourceText, voiceName, description } = body;
+    const sourceVid =  body.voiceFile
 
     const fileApi = new Bytescale.FileApi({
       fetchApi: nodeFetch as any,

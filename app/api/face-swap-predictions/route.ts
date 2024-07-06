@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
     })
     const storedPrediction = {id:prediction.id, input:prediction.input, outputUrl:outputUrl?.fileUrl, created_at:prediction.created_at, completed_at:prediction.completed_at, metrics:prediction.metrics}
     console.log("stored prediction", storedPrediction)
-    // send prediction with new output to firebase
+   
  
 
-
+    // send prediction with new output to firebase
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       const { credits } = docSnap.data()

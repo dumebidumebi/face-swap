@@ -20,13 +20,13 @@ export async function POST(req: NextRequest) {
 
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
-      await setDoc(docRef, {predictions: [], credits: starterCredits}, {merge: true});
+      await setDoc(docRef, {predictions: [], avatars: [], credits: starterCredits}, {merge: true});
       await clerkClient.users.updateUserMetadata(userId, {
         publicMetadata: {
           credits: starterCredits
         }
       })
-    }else{ await setDoc(docRef, {predictions: [], credits:starterCredits}, {merge: true}); 
+    }else{ await setDoc(docRef, {predictions: [], avatars: [], credits:starterCredits}, {merge: true}); 
     await clerkClient.users.updateUserMetadata(userId, {
       publicMetadata: {
         credits: starterCredits

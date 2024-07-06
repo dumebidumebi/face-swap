@@ -117,7 +117,7 @@ export default function Home() {
     </div>
     <div className='flex flex-col h-full sm:pl-10 sm:ml-0'>
      <h1 className='font-semibold text-lg mb-10 pb-5 mt-5  ml-0 sm:mt-0'>Output</h1>
-     <Suspense fallback={<Skeleton className="h-[200px] w-[300px] rounded-xl" />}>
+     <Suspense fallback={<Skeleton className="h-[200px] w-[300px] rounded-xl " />}>
      <ReactPlayer controls style={{maxWidth:"300px", maxHeight: "200px"}} url={"https://upcdn.io/12a1yvy/raw/uploads/2024/05/23/4kbXxmhJ43-file.mp4"} />
      </Suspense>
     </div>

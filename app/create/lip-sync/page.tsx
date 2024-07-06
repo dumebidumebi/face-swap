@@ -20,18 +20,9 @@ import { Badge } from '@/components/ui/badge';
 import { PredictionAvatar, useAvatarStore } from '@/app/avatars/page';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
 import * as Bytescale from "@bytescale/sdk";
 import nodeFetch from "node-fetch";
+import { v4 } from "uuid";
 
 
 // Default values shown
@@ -89,11 +80,22 @@ console.log(refreshedCompany)
   return refreshedCompany
 }
 
+async function StoreVoice(userId:string, voiceName:string, description:string, voiceFile:string) {
+  const avatarId = v4()
+  const refreshedCompany = await fetch("/api/add-voice", {
+    method: "POST",
+    body: JSON.stringify({userId:userId, voiceName: voiceName, description: description, voiceFile: voiceFile, avatarId:avatarId}),
+  }).then((res) => res.json());
+console.log(refreshedCompany)
+
+  return refreshedCompany
+}
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function Page() {
   const options = {
-    apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC", // This is your API key.
+    apiKey: process.env.BYTESCALE_PUBLIC_KEY, // This is your API key.
     maxFileCount: 1
   }; 
 
@@ -129,8 +131,11 @@ useEffect(() => {
 }, [])
 
   async function uploadFile(){
-    if ((predictionAvatar == null) && (customAvatar == null)) return;
-    if (text == null) return alert('remember to input text')
+    if ((predictionAvatar == null) && (customAvatar == '')) return alert('select or create avatar');
+    if (text.trim() === '') {
+      return alert('Enter input text');
+    }
+    
     // if (voiceId == null) return
     if(error){
       setError(null)
@@ -143,6 +148,7 @@ useEffect(() => {
     // run tts
     // delete created voice, but dont delete premade
     // const audio = await RunTts(user.id, text, voiceId)
+    await StoreVoice(user?.id, voiceName, description, customAvatar)
     const audio = await AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
     console.log(audio)
 
@@ -211,7 +217,7 @@ useEffect(() => {
       <Textarea className='bg-white outline-none max-w-80 md:max-w-96' placeholder="what do you want them to say..." id="message" 
         value={text}
         onChange={handleChange} />
-     <div><h1 className='mt-5 font-medium'>Selected Avatar:  {voiceName? voiceName : (predictionAvatar?.title ? predictionAvatar?.title: '')}</h1></div>
+     <div><h1 className='mt-5 font-medium'>Selected Avatar:  {voiceName? voiceName : (predictionAvatar?.voiceName ? predictionAvatar?.voiceName: '')}</h1></div>
      <CarouselComponent onClick={handleClick} />
      <Link className='flex mt-2 flex-row gap-2' href={"/avatars"}><p className=" underline ">Browse trending avatars</p><span><Badge>new</Badge></span></Link>
 
@@ -225,9 +231,7 @@ useEffect(() => {
           <Input className='bg-white outline-none mb-5 ' 
             value={voiceName}
             onChange={handleNameChange} />
-          {/* <Input type="file" className='bg-zinc-300 mb-5' onChange={e => {
-             bytescaleUpload((e.target.files[0]))
-        }} ></Input> */}
+          
         <Label className='font-medium mb-2'>Source File</Label>
         <Label className='font-extralight mb-2'>Upload a video of someone talking for 1 minute</Label>
         <UploadButton options={options}
