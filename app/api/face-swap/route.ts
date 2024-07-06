@@ -73,5 +73,5 @@ export async function POST(req: NextRequest) {
 
           
         return new Response(JSON.stringify(prediction))
+        }
 
-}

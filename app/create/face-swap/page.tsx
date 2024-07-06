@@ -66,8 +66,8 @@ useEffect(() => {
     cancelPrediction(prediction?.id)
   }
   async function uploadFile(){
-    if (targetVid == null) return;
-    if (sourceVid == null) return
+    if (targetVid == null) return alert('input target video');
+    if (sourceVid == null) return alert('input source image')
     if(error){
       setError(null)
       setPrediction(null)
