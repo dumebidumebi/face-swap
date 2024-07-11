@@ -5,13 +5,14 @@ import { db } from "@/firebase";
 import Replicate from 'replicate';
 import * as Bytescale from "@bytescale/sdk";
 import { uploadFromUrl } from "@/lib/uploadFromUrl";
-import { clerkClient } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function POST(req: NextRequest) {
   const replicate = new Replicate();
   const body = await req.json()
   const avatar = body.targetVid
   const outputUrl = body.sourceAudio
+  const { userId } = auth();
   const fileApi = new Bytescale.FileApi({
     apiKey: "public_12a1yvy634kYX3ss1W9DgV64CaeC"
   });
@@ -64,11 +65,26 @@ export async function POST(req: NextRequest) {
     const videoRetalkPrediction = await replicate.deployments.predictions.create(
     "dumebidumebi",
     "dumebi-video-retalk",{
-      input: input
+      input: input,
+      webhook: 'https://www.createdeepfakes.com/api/replicate-webhook',
+      webhook_events_filter: ["completed"]
     });
     if(videoRetalkPrediction?.error){
       return new Response(JSON.stringify(videoRetalkPrediction))
     }
+
+    const storedPrediction = {id:videoRetalkPrediction.id, input:videoRetalkPrediction.input, outputUrl:videoRetalkPrediction.output, created_at:videoRetalkPrediction.created_at, completed_at:videoRetalkPrediction.completed_at, metrics:videoRetalkPrediction.metrics, apiVersion: videoRetalkPrediction.version}
+    
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef); 
+
+  
+    // check if the user has this prediction already stored, otherwise its not theirs
+    if (docSnap.exists()) {
+  
+     await updateDoc(docRef, {predictions: arrayUnion(storedPrediction)});
+    
+}
 
     return new Response(JSON.stringify(videoRetalkPrediction))
   }

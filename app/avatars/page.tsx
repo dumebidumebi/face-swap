@@ -129,7 +129,7 @@ const handleDescriptionChange = (event) => {
 };
 
 
-const handleSubmit = () => {
+const handleAvatarSubmit = () => {
   if(customAvatar == '') return alert('upload files or cancel')
   if (voiceName.trim() === '') {
     return alert('Enter name or cancel');
@@ -172,7 +172,7 @@ return(
         </div>
         <div className='flex justify-center'>
           <DialogClose>
-        <Button className='w-fit m-5 rounded-sm' onClick={handleSubmit}>Submit</Button>
+        <Button className='w-fit m-5 rounded-sm' onClick={handleAvatarSubmit}>Submit</Button>
         <Button className='w-fit  rounded-sm' variant='secondary'>Cancel</Button>
         </DialogClose>
         </div>

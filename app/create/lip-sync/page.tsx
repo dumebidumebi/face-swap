@@ -23,6 +23,8 @@ import { Input } from '@/components/ui/input';
 import * as Bytescale from "@bytescale/sdk";
 import nodeFetch from "node-fetch";
 import { v4 } from "uuid";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { DialogClose } from '@radix-ui/react-dialog';
 
 
 // Default values shown
@@ -54,11 +56,10 @@ async function RunRetalk(userId: string, avatar:string, outputUrl:string) {
   return refreshedCompany
 }
 
-async function RunTts(userId: string, text:string, voiceId: string) {
-  const refreshedCompany = await fetch("/api/elevenlabs-tts", {
+async function Test() {
+  const refreshedCompany = await fetch("/api/test", {
     method: "POST",
-    body: JSON.stringify({userId: userId, sourceText: text, voiceId: voiceId}),
-  }).then((res) => res.json());
+  })
   return refreshedCompany
 }
 
@@ -95,7 +96,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function Page() {
   const options = {
-    apiKey: process.env.BYTESCALE_PUBLIC_KEY, // This is your API key.
+    apiKey: 'public_12a1yvy634kYX3ss1W9DgV64CaeC', // This is your API key.
     maxFileCount: 1
   }; 
 
@@ -148,7 +149,7 @@ useEffect(() => {
     // run tts
     // delete created voice, but dont delete premade
     // const audio = await RunTts(user.id, text, voiceId)
-    await StoreVoice(user?.id, voiceName, description, customAvatar)
+    // await StoreVoice(user?.id, voiceName, description, customAvatar)
     const audio = await AddVoice(voiceName, description, customAvatar? customAvatar: predictionAvatar?.videoUrl, text)
     console.log(audio)
 
@@ -207,6 +208,14 @@ useEffect(() => {
     };
 
 
+    const handleAvatarSubmit = () => {
+      if(customAvatar == '') return alert('upload files or cancel')
+      if (voiceName.trim() === '') {
+        return alert('Enter name or cancel');
+      }  
+      StoreVoice(user?.id, voiceName, description, customAvatar)
+    };
+
   return (
     <>
     <h1 className='text-xl font-bold m-5'>Lip Sync</h1>
@@ -220,44 +229,40 @@ useEffect(() => {
      <div><h1 className='mt-5 font-medium'>Selected Avatar:  {voiceName? voiceName : (predictionAvatar?.voiceName ? predictionAvatar?.voiceName: '')}</h1></div>
      <CarouselComponent onClick={handleClick} />
      <Link className='flex mt-2 flex-row gap-2' href={"/avatars"}><p className=" underline ">Browse trending avatars</p><span><Badge>new</Badge></span></Link>
+      <Dialog>
+        <DialogTrigger className='text-left'><Button className='w-fit mb-10  rounded-sm'>Create Custom Avatar</Button></DialogTrigger>
+        <DialogContent className='mx-0'>
+          <DialogHeader>
+            <DialogTitle>Create Custom Avatar</DialogTitle>
+            <DialogDescription>
+            Create your own custom avatar. Upload a video of someone and make them say anything!
+            </DialogDescription>
+          </DialogHeader>
+          <div className=' mb-15'>
+                <Label className='font-medium mt-5 mb-2'>Name</Label>
+                <Input className='bg-white outline-none mb-5 ' 
+                  value={voiceName}
+                  onChange={handleNameChange} />
+              <Label className='font-medium mb-2'>Source File</Label>
+              <Label className='font-extralight m-2'> - Upload a video of someone talking for 1 minute</Label>
+                  <UploadDropzone options={options}
+                      onUpdate={({ uploadedFiles }) => {setCustomAvatar(uploadedFiles.map(x => x.fileUrl).join("\n"));setTargetInputText(uploadedFiles.map(x => x.originalFile.originalFileName).join("\n"));}}
+                        height="200px" />
+                <Label className='font-medium mb-2'>Description</Label>
+                <Textarea className='bg-white outline-none mb-5 ' placeholder="how would you describe the voice" 
+                  value={description}
+                  onChange={handleDescriptionChange} />
+              </div>
+              <div className='flex justify-center'>
+                <DialogClose>
+              <Button className='w-fit m-5 rounded-sm' onClick={handleAvatarSubmit}>Submit</Button>
+              <Button className='w-fit  rounded-sm' variant='secondary'>Cancel</Button>
+              </DialogClose>
+              </div>
+        </DialogContent>
+      </Dialog>
 
-      <Accordion type="single" collapsible className='w-fit '>
-      <AccordionItem value="item-1">
-        <AccordionTrigger><Button className='w-fit rounded-sm'>Create Custom Avatar</Button></AccordionTrigger>
-        <AccordionContent className='bg-slate-200 overflow-y-scroll h-full gap-2'>
-        
-        <div className='mx-5 '>
-          <Label className='font-medium mt-5 mb-2'>Name</Label>
-          <Input className='bg-white outline-none mb-5 ' 
-            value={voiceName}
-            onChange={handleNameChange} />
-          
-        <Label className='font-medium mb-2'>Source File</Label>
-        <Label className='font-extralight mb-2'>Upload a video of someone talking for 1 minute</Label>
-        <UploadButton options={options}
-                          onComplete={files => {setCustomAvatar(files.map(x => x.fileUrl).join("\n"));setTargetInputText(files.map(x => x.originalFile.originalFileName).join("\n"))}}>
-              {({onClick}) =>
-                <>
-                <div onClick={onClick} className='max-w-full border-2 mb-5 rounded-sm flex justify-left text-center content-center'>
-                  <Button variant='secondary' size='sm' className='w-full rounded-sm' >
-                  <Upload /><span className='ml-5'>choose file...</span>
-                  </Button>
-                  <p className='text-center truncate pt-1.5'>
-                  {targetInputText}
-                  </p>
-                  </div>
-                  </>
-              }
-            </UploadButton>
-          <Label className='font-medium mb-2'>Description</Label>
-          <Textarea className='bg-white outline-none mb-5 ' placeholder="how would you describe the voice" 
-            value={description}
-            onChange={handleDescriptionChange} />
-        </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-
+      <Button className='w-fit mb-10  rounded-sm' onClick={() => Test()}>Test</Button>
 
   <div className='flex flex-row gap-5'>
      <SignedIn>
@@ -287,7 +292,7 @@ useEffect(() => {
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
      {prediction?.output && (<Suspense fallback={<Skeleton className="h-[125px] w-[250px] rounded-xl" />}><ReactPlayer controls style={{maxWidth:"400px", minInlineSize:"200px"}} url={prediction?.output} /></Suspense>)}
-     <Accordion type="single" collapsible className='w-fit max-w-80'>
+     <Accordion type="single" collapsible className=' w-96'>
       <AccordionItem value="item-1">
         <AccordionTrigger>Show Logs</AccordionTrigger>
         <AccordionContent className='bg-slate-200 overflow-y-scroll h-20'>
