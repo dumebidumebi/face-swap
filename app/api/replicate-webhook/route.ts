@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   console.log("clerk webhook user", userId)
   console.log("🪝 incoming webhook!", data.id);
   const prediction = data;
-  const storedPrediction = {id:prediction.id, input:prediction.input, outputUrl:prediction.ouput, created_at:prediction.created_at, completed_at:prediction.completed_at, metrics:prediction.metrics, apiVersion: prediction.version}
+  const storedPrediction = {id:prediction.id, input:prediction.input, outputUrl:prediction.output, created_at:prediction.created_at, completed_at:prediction.completed_at, metrics:prediction.metrics, apiVersion: prediction.version}
   const lipSyncApiPrice = 0.000725
   const ttsApiPrice = 0.000225
   const faceSwapApiPrice = 0.000725

@@ -52,7 +52,7 @@ async function RunRetalk(userId: string, avatar:string, outputUrl:string) {
   const refreshedCompany = await fetch("/api/retalk", {
     method: "POST",
     body: JSON.stringify({userId: userId, targetVid: avatar, sourceAudio: outputUrl}),
-  }).then((res) => res.json());
+  }).then((res) => { if (res.status == 500 ) return null ; return res.json() });
   return refreshedCompany
 }
 
@@ -75,7 +75,7 @@ async function AddVoice(voiceName:string, description:string, voiceFile, text:st
   const refreshedCompany = await fetch("/api/elevenlabs-add-voice", {
     method: "POST",
     body: JSON.stringify({voiceName: voiceName, description: description, voiceFile: voiceFile, sourceText:text}),
-  }).then((res) => res.json());
+  }).then((res) => { if (res.status == 500 ) return null ; return res.json() });
 console.log(refreshedCompany)
 
   return refreshedCompany
@@ -155,13 +155,15 @@ useEffect(() => {
 
     // if(!audio) return
     // const lsAudio = await RunLipSync(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl, audio, pitch )
-    if(audio.error){
-      return setError(`Upload Error ${audio.error}`)
+    if(audio == null){
+      setLoading(false)
+      return setError(`Upload Error`)
     } 
           const predict = await RunRetalk(user?.id, customAvatar? customAvatar: predictionAvatar?.videoUrl , audio)
           setPrediction(predict)
-          if (prediction?.error) {
-            setError(prediction.error);
+          if (prediction == null) {
+            setLoading(false)
+            setError('upload error');
             return;
           }
           while (
@@ -262,7 +264,7 @@ useEffect(() => {
         </DialogContent>
       </Dialog>
 
-      <Button className='w-fit mb-10  rounded-sm' onClick={() => Test()}>Test</Button>
+      {/* <Button className='w-fit mb-10  rounded-sm' onClick={() => Test()}>Test</Button> */}
 
   <div className='flex flex-row gap-5'>
      <SignedIn>

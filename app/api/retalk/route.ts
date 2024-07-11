@@ -18,7 +18,9 @@ export async function POST(req: NextRequest) {
   });
 
 
-    console.log("https://upcdn.io/12a1yvy/audio" + outputUrl.slice(28) + "?f=wav-rf64")
+try {
+  
+
     // process api
     const wavInput = async () => await fileApi.processFile({
       accountId: "12a1yvy",
@@ -73,7 +75,7 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify(videoRetalkPrediction))
     }
 
-    const storedPrediction = {id:videoRetalkPrediction.id, input:videoRetalkPrediction.input, outputUrl:videoRetalkPrediction.output, created_at:videoRetalkPrediction.created_at, completed_at:videoRetalkPrediction.completed_at, metrics:videoRetalkPrediction.metrics, apiVersion: videoRetalkPrediction.version}
+    const storedPrediction = {id:videoRetalkPrediction.id, input:videoRetalkPrediction.input, created_at:videoRetalkPrediction.created_at, apiVersion: videoRetalkPrediction.version}
     
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef); 
@@ -81,13 +83,16 @@ export async function POST(req: NextRequest) {
   
     // check if the user has this prediction already stored, otherwise its not theirs
     if (docSnap.exists()) {
-  
      await updateDoc(docRef, {predictions: arrayUnion(storedPrediction)});
-    
-}
+    }
 
     return new Response(JSON.stringify(videoRetalkPrediction))
   }
+
+} catch (error) {
+  console.error('Error:', error.message);
+  return new Response(null, { status: 500 });
+}
 
   }
 
