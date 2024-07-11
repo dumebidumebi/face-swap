@@ -169,7 +169,7 @@ useEffect(() => {
             <div className='font-extralight'>Prediction {prediction?.status}...</div>
             )}
      {prediction?.output && (<ReactPlayer controls style={{maxWidth:"400px", minWidth:"200px"}} url={prediction?.output} />)}
-     <Accordion type="single" collapsible className='w-fit max-w-80'>
+     <Accordion type="single" collapsible className='w-fit max-w-96'>
       <AccordionItem value="item-1">
         <AccordionTrigger >Show Logs</AccordionTrigger>
         <AccordionContent className='bg-slate-200 overflow-y-scroll h-20'>
